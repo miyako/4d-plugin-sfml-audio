@@ -71,7 +71,7 @@ pitch:=SOUND Get pitch
 
 Parameter|Type|Description
 ------------|------------|----
-pitch|REAL|Perceived fundamental frequency of a sound. Default is ``1``. Changing the pitch modifies the playing speed too..
+pitch|REAL|Perceived fundamental frequency of a sound. Default is ``1``. Changing the pitch modifies the playing speed too.
 
 ```
 SOUND SET VOLUME (volume)
