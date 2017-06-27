@@ -15,3 +15,137 @@ Using [Simple and Fast Multimedia Library](https://www.sfml-dev.org/index.php).
 
 ## Syntax
 
+```
+GET RECORDING DEVICES (devices)
+```
+
+Parameter|Type|Description
+------------|------------|----
+devices|ARRAY TEXT|
+
+```
+device:=Get default recording device
+```
+
+Parameter|Type|Description
+------------|------------|----
+device|TEXT|
+
+```
+error:=SOUND Start recording (params)
+```
+
+Parameter|Type|Description
+------------|------------|----
+params|TEXT|JSON
+error|LONGINT|``-1`` if recording is not available
+
+```
+data:=SOUND Stop recording (params)
+```
+
+Parameter|Type|Description
+------------|------------|----
+params|TEXT|JSON
+data|BLOB|Sample frame data (array of ``Int16``)
+
+```
+SOUND STOP
+SOUND PAUSE
+SOUND PLAY
+```
+
+```
+SOUND SET DATA (data)
+data:=SOUND Get data
+```
+
+Parameter|Type|Description
+------------|------------|----
+data|BLOB|``WAV``, ``OGG/Vorbis``, or ``FLAC`` data
+
+```
+SOUND SET PITCH (pitch)
+pitch:=SOUND Get pitch
+```
+
+Parameter|Type|Description
+------------|------------|----
+pitch|REAL|Perceived fundamental frequency of a sound. Default is ``1``. Changing the pitch modifies the playing speed too..
+
+```
+SOUND SET VOLUME (volume)
+volume:=SOUND Get volume
+```
+
+Parameter|Type|Description
+------------|------------|----
+volume|REAL|Volume between ``0`` (mute) and ``100`` (full volume).
+
+```
+SOUND SET POSITION (position)
+position:=SOUND Get position
+```
+
+Parameter|Type|Description
+------------|------------|----
+position|LONGINT|Current playing position milliseconds
+
+```
+IMPORT AUDIO FILE (path;data)
+```
+
+Parameter|Type|Description
+------------|------------|----
+path|TEXT|
+data|BLOB|``WAV``, ``OGG/Vorbis``, or ``FLAC`` data
+
+```
+EXPORT AUDIO FILE (path;data;sampleRate;channelCount)
+```
+
+Parameter|Type|Description
+------------|------------|----
+path|TEXT|
+data|BLOB|Sample frame data (array of ``Int16``)
+sampleRate|LONGINT|
+channelCount|LONGINT|
+
+```
+status:=SOUND Get status
+```
+
+Parameter|Type|Description
+------------|------------|----
+status|LONGINT|``Sound status stopped 0``, ``Sound status paused 1``, ``Sound status playing 2``
+
+```
+SOUND SET LOOP (loop)
+loop:=SOUND Get loop
+```
+
+Parameter|Type|Description
+------------|------------|----
+loop|LONGINT|
+
+duration:=SOUND Get duration
+
+Parameter|Type|Description
+------------|------------|----
+duration|LONGINT|Duration in milliseconds
+
+```
+sampleRate:=SOUND Get sample rate
+```
+
+Parameter|Type|Description
+------------|------------|----
+sampleRate|LONGINT|
+
+```
+channelCount:=SOUND Get channel count
+```
+
+Parameter|Type|Description
+------------|------------|----
+channelCount|LONGINT|
