@@ -3,6 +3,14 @@ Record and play back wave audio
 
 Using [Simple and Fast Multimedia Library](https://www.sfml-dev.org/index.php).
 
+The plugin can play one audio file at a time.
+
+Support file formats are ``WAV``, ``OGG/Vorbis``, and ``FLAC``. You can load the data using either ``IMPORT AUDIO FILE`` or ``SOUND SET DATA``.
+
+The plugin can record from one audio capture device at a time. Every time the recording is stopped, a BLOB of sampling frames is returned. You can concatenate such BLOBs with ``COPY BLOB``. When done, use the ``EXPORT AUDIO FILE`` command to create a ``WAV``, ``OGG/Vorbis``, or ``FLAC`` file.
+
+Although SFML supports threading, the plugin will play just one audio file at a time.
+
 ### Platform
 
 | carbon | cocoa | win32 | win64 |
