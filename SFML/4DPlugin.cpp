@@ -525,7 +525,7 @@ void SOUND_Start_recording(sLONG_PTR *pResult, PackagePtr pParams)
 void SOUND_Stop_recording(PA_PluginParameters params)
 {
 	PackagePtr pParams = (PackagePtr)params->fParameters;
-	sLONG_PTR *pResult = (sLONG_PTR *)params->fResult;
+//	sLONG_PTR *pResult = (sLONG_PTR *)params->fResult;
 	
 	audioRecorder->stop();
 	
@@ -537,7 +537,7 @@ void SOUND_Stop_recording(PA_PluginParameters params)
 	unsigned int channelCount = audioRecorder->getChannelCount();
 	
 	sf::Uint64 sampleCount = recordedBuffer.getSampleCount();
-	const sf::Int16* samples = recordedBuffer.getSamples();
+//	const sf::Int16* samples = recordedBuffer.getSamples();
 
 	PA_ReturnBlob(params, (void *)recordedBuffer.getSamples(), (PA_long32)(sampleCount * sizeof(sf::Int16)));
 	
