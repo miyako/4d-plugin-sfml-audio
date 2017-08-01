@@ -17,6 +17,10 @@ The plugin can **record** from one audio capture device at a time. Every time th
 
 <img src="https://cloud.githubusercontent.com/assets/1725068/18940649/21945000-8645-11e6-86ed-4a0f800e5a73.png" width="32" height="32" /> <img src="https://cloud.githubusercontent.com/assets/1725068/18940648/2192ddba-8645-11e6-864d-6d5692d55717.png" width="32" height="32" />
 
+### Example
+
+<img width="505" alt="screenshot" src="https://user-images.githubusercontent.com/1725068/28803879-951a2e96-769a-11e7-96dc-9d3c2f0a98b8.png">
+
 ## Syntax
 
 ```
