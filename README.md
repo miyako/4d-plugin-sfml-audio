@@ -106,7 +106,6 @@ IMPORT AUDIO FILE (path;data)
 Parameter|Type|Description
 ------------|------------|----
 path|TEXT|
-data|BLOB|``WAV``, ``OGG/Vorbis``, or ``FLAC`` data
 
 ```
 EXPORT AUDIO FILE (path;data;sampleRate;channelCount)
