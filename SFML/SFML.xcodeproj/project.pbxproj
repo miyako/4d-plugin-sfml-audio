@@ -16,8 +16,6 @@
 		8D01CCC80486CAD60068D4B7 /* 4D Plugin_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32BAE0B30371A71500C91783 /* 4D Plugin_Prefix.pch */; };
 		8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		D120937F13534DCC00A72CAA /* 4DPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = D120937E13534DCC00A72CAA /* 4DPlugin.h */; };
-		D12A0E0D1F00DCDE0050E5D2 /* libsfml-audio.2.4.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D12A0E0B1F00DCDE0050E5D2 /* libsfml-audio.2.4.2.dylib */; };
-		D12A0E0E1F00DCDE0050E5D2 /* libsfml-system.2.4.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D12A0E0C1F00DCDE0050E5D2 /* libsfml-system.2.4.2.dylib */; };
 		D130064F12F02D9700702C0E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D130064E12F02D9700702C0E /* Cocoa.framework */; };
 		D13116A91A03ACB700DE1322 /* 4DPluginAPI.c in Sources */ = {isa = PBXBuildFile; fileRef = D13116A81A03ACB700DE1322 /* 4DPluginAPI.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		D13116AC1A03B10800DE1322 /* C_LONGINT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D13116AA1A03B10800DE1322 /* C_LONGINT.cpp */; };
@@ -55,6 +53,14 @@
 		D13116F51A03C7AF00DE1322 /* ARRAY_DATE.h in Headers */ = {isa = PBXBuildFile; fileRef = D13116F31A03C7AF00DE1322 /* ARRAY_DATE.h */; };
 		D134D4AC1A030BA0008D14EF /* manifest.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = D134D4A91A030B06008D14EF /* manifest.json */; };
 		D175D9CD1A02E8DD0006B569 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D175D9CC1A02E8DD0006B569 /* CoreGraphics.framework */; };
+		D1D74DD023F6F870007DF6D2 /* libsfml-audio-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DCE23F6F835007DF6D2 /* libsfml-audio-s.a */; };
+		D1D74DD123F6F870007DF6D2 /* libsfml-system-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DCF23F6F835007DF6D2 /* libsfml-system-s.a */; };
+		D1D74DD623F6F8A8007DF6D2 /* libFLAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DD523F6F899007DF6D2 /* libFLAC.a */; };
+		D1D74DD823F6F8CA007DF6D2 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DD723F6F8C2007DF6D2 /* libogg.a */; };
+		D1D74DDC23F6F8EE007DF6D2 /* libvorbis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DDA23F6F8E6007DF6D2 /* libvorbis.a */; };
+		D1D74DDD23F6F8EE007DF6D2 /* libvorbisenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DDB23F6F8E6007DF6D2 /* libvorbisenc.a */; };
+		D1D74DDE23F6F8EE007DF6D2 /* libvorbisfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DD923F6F8E6007DF6D2 /* libvorbisfile.a */; };
+		D1D74DE223F6F9A2007DF6D2 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DE123F6F9A2007DF6D2 /* OpenAL.framework */; };
 		D1F64CD81F0100EF004BBA31 /* libjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F64CD71F0100EF004BBA31 /* libjson.a */; };
 /* End PBXBuildFile section */
 
@@ -62,7 +68,7 @@
 		D134D4AB1A030B7A008D14EF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = ..;
+			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
 				D134D4AC1A030BA0008D14EF /* manifest.json in CopyFiles */,
@@ -123,6 +129,18 @@
 		D134D4A91A030B06008D14EF /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		D14D10DD1A03A8A5008B3411 /* constants.xlf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = constants.xlf; sourceTree = "<group>"; };
 		D175D9CC1A02E8DD0006B569 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D1D74DCE23F6F835007DF6D2 /* libsfml-audio-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsfml-audio-s.a"; path = "a/libsfml-audio-s.a"; sourceTree = "<group>"; };
+		D1D74DCF23F6F835007DF6D2 /* libsfml-system-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsfml-system-s.a"; path = "a/libsfml-system-s.a"; sourceTree = "<group>"; };
+		D1D74DD223F6F870007DF6D2 /* libsfml-window-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsfml-window-s.a"; path = "a/libsfml-window-s.a"; sourceTree = "<group>"; };
+		D1D74DD323F6F870007DF6D2 /* libsfml-graphics-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsfml-graphics-s.a"; path = "a/libsfml-graphics-s.a"; sourceTree = "<group>"; };
+		D1D74DD423F6F870007DF6D2 /* libsfml-network-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsfml-network-s.a"; path = "a/libsfml-network-s.a"; sourceTree = "<group>"; };
+		D1D74DD523F6F899007DF6D2 /* libFLAC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFLAC.a; path = a/libFLAC.a; sourceTree = "<group>"; };
+		D1D74DD723F6F8C2007DF6D2 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = a/libogg.a; sourceTree = "<group>"; };
+		D1D74DD923F6F8E6007DF6D2 /* libvorbisfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisfile.a; path = a/libvorbisfile.a; sourceTree = "<group>"; };
+		D1D74DDA23F6F8E6007DF6D2 /* libvorbis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbis.a; path = a/libvorbis.a; sourceTree = "<group>"; };
+		D1D74DDB23F6F8E6007DF6D2 /* libvorbisenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvorbisenc.a; path = a/libvorbisenc.a; sourceTree = "<group>"; };
+		D1D74DDF23F6F90D007DF6D2 /* libao.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libao.a; path = a/libao.a; sourceTree = "<group>"; };
+		D1D74DE123F6F9A2007DF6D2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D1F64CD71F0100EF004BBA31 /* libjson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjson.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,11 +149,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D74DE223F6F9A2007DF6D2 /* OpenAL.framework in Frameworks */,
+				D1D74DD023F6F870007DF6D2 /* libsfml-audio-s.a in Frameworks */,
 				D13116C71A03B5B600DE1322 /* AppKit.framework in Frameworks */,
-				D12A0E0D1F00DCDE0050E5D2 /* libsfml-audio.2.4.2.dylib in Frameworks */,
 				D175D9CD1A02E8DD0006B569 /* CoreGraphics.framework in Frameworks */,
+				D1D74DD823F6F8CA007DF6D2 /* libogg.a in Frameworks */,
 				D130064F12F02D9700702C0E /* Cocoa.framework in Frameworks */,
-				D12A0E0E1F00DCDE0050E5D2 /* libsfml-system.2.4.2.dylib in Frameworks */,
+				D1D74DD123F6F870007DF6D2 /* libsfml-system-s.a in Frameworks */,
+				D1D74DDC23F6F8EE007DF6D2 /* libvorbis.a in Frameworks */,
+				D1D74DDD23F6F8EE007DF6D2 /* libvorbisenc.a in Frameworks */,
+				D1D74DDE23F6F8EE007DF6D2 /* libvorbisfile.a in Frameworks */,
+				D1D74DD623F6F8A8007DF6D2 /* libFLAC.a in Frameworks */,
 				D1F64CD81F0100EF004BBA31 /* libjson.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,6 +176,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
 				189286360695AD8900B05D6E /* Products */,
+				D1D74DC923F6E52A007DF6D2 /* Frameworks */,
 			);
 			name = SFML;
 			sourceTree = "<group>";
@@ -274,6 +299,25 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		D1D74DC923F6E52A007DF6D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D1D74DE123F6F9A2007DF6D2 /* OpenAL.framework */,
+				D1D74DDF23F6F90D007DF6D2 /* libao.a */,
+				D1D74DDA23F6F8E6007DF6D2 /* libvorbis.a */,
+				D1D74DDB23F6F8E6007DF6D2 /* libvorbisenc.a */,
+				D1D74DD923F6F8E6007DF6D2 /* libvorbisfile.a */,
+				D1D74DD723F6F8C2007DF6D2 /* libogg.a */,
+				D1D74DD523F6F899007DF6D2 /* libFLAC.a */,
+				D1D74DD323F6F870007DF6D2 /* libsfml-graphics-s.a */,
+				D1D74DD423F6F870007DF6D2 /* libsfml-network-s.a */,
+				D1D74DD223F6F870007DF6D2 /* libsfml-window-s.a */,
+				D1D74DCE23F6F835007DF6D2 /* libsfml-audio-s.a */,
+				D1D74DCF23F6F835007DF6D2 /* libsfml-system-s.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D1F64CD61F0100EF004BBA31 /* a */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +373,7 @@
 				8D01CCCB0486CAD60068D4B7 /* Sources */,
 				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
 				8D01CCCF0486CAD60068D4B7 /* Rez */,
+				D1D74DC823F6E4F8007DF6D2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -394,6 +439,26 @@
 		};
 /* End PBXRezBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D1D74DC823F6E4F8007DF6D2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test \"$CONFIGURATION\" == 'Deployment'; then\n    USER_NAME=keisuke.miyako@4d.com\n    UUID=`uuidgen | tr -d - | tr -d '\\n' | tr '[:upper:]' '[:lower:]'`\n    DEVELOPER_ID=`security find-identity -p codesigning -v | egrep 'Developer ID Application[^\"]+' -o`\n    PRODUCT_PATH=\"$CODESIGNING_FOLDER_PATH\"\n    xattr -cr \"$PRODUCT_PATH\"\n    codesign --remove-signature \"$PRODUCT_PATH\"\n    codesign --verbose --deep --timestamp --force --sign \"$DEVELOPER_ID\" \"$PRODUCT_PATH\"\n    DMG_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.dmg\"\n    ZIP_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.zip\"\n    rm \"$DMG_PATH\"\n    hdiutil create -format UDBZ -plist -srcfolder \"$PRODUCT_PATH\" \"$DMG_PATH\"\n    echo \"xcrun stapler staple \\\"$PRODUCT_PATH\\\"\"\n    echo \"hdiutil create -format UDBZ -plist -srcfolder  \\\"$PRODUCT_PATH\\\" \\\"$DMG_PATH\\\" \"\n    echo \"ditto -c -k --keepParent \\\"$PRODUCT_PATH\\\" \\\"$ZIP_PATH\\\" \"\n    xcrun altool --notarize-app --file \"$DMG_PATH\" --username \"$USER_NAME\" --password \"@keychain:altool\" --primary-bundle-id $PRODUCT_BUNDLE_IDENTIFIER.$UUID\n    echo \"spctl -a -vv -t install \\\"$PRODUCT_PATH\\\" \"\n    rm -f \"$ZIP_PATH\"\n    rm -f \"$DMG_PATH\"\nelse\n    echo \"No notarization performed as this is not a release build.\"\nfi\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -440,8 +505,10 @@
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 3.0;
 				DEBUGGING_SYMBOLS = YES;
 				DEPLOYMENT_LOCATION = NO;
 				DEVELOPMENT_TEAM = "";
@@ -463,6 +530,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/SFML.4dbase/Plugins/SFML.bundle/Contents/MacOS",
 					"$(PROJECT_DIR)/stdc/a",
+					"$(PROJECT_DIR)/a",
 				);
 				LIBRARY_STYLE = Bundle;
 				OTHER_CFLAGS = "";
@@ -488,8 +556,10 @@
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 3.0;
 				DEPLOYMENT_LOCATION = NO;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -508,6 +578,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/SFML.4dbase/Plugins/SFML.bundle/Contents/MacOS",
 					"$(PROJECT_DIR)/stdc/a",
+					"$(PROJECT_DIR)/a",
 				);
 				LIBRARY_STYLE = Bundle;
 				OTHER_CFLAGS = "";
@@ -533,7 +604,9 @@
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 3.0;
 				DEPLOYMENT_LOCATION = NO;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -551,6 +624,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/SFML.4dbase/Plugins/SFML.bundle/Contents/MacOS",
 					"$(PROJECT_DIR)/stdc/a",
+					"$(PROJECT_DIR)/a",
 				);
 				LIBRARY_STYLE = Bundle;
 				OTHER_CFLAGS = "";
@@ -572,7 +646,7 @@
 		42D60B440A9DDBC8002ABB42 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -582,6 +656,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -594,9 +669,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OBJROOT = "$(SRCROOT)/build";
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = "$(SRCROOT)/$(PRODUCT_NAME).4dbase/Plugins";
 				USER_HEADER_SEARCH_PATHS = include;
 			};
@@ -605,7 +680,7 @@
 		42D60B450A9DDBC8002ABB42 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -615,6 +690,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -627,9 +703,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OBJROOT = "$(SRCROOT)/build";
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = "$(SRCROOT)/$(PRODUCT_NAME).4dbase/Plugins";
 				USER_HEADER_SEARCH_PATHS = include;
 			};
@@ -638,7 +714,7 @@
 		42D60B460A9DDBC8002ABB42 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -648,6 +724,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -659,8 +736,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				SDKROOT = macosx10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				SDKROOT = macosx;
 				SYMROOT = "$(SRCROOT)/$(PRODUCT_NAME).4dbase/Plugins";
 				USER_HEADER_SEARCH_PATHS = include;
 			};
