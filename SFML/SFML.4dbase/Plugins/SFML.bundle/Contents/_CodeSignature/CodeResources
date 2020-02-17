@@ -100,7 +100,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Dj/oPtoRXrAVOU0/nUuZlDzs428=
+			fhxs1ojXEIUh4Njre+HZMTKjgr8=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -112,10 +112,6 @@
 		<key>Resources/license.md</key>
 		<data>
 		0ls06Eha4s995PxaDFqUJYmL3/k=
-		</data>
-		<key>Resources/manifest.json</key>
-		<data>
-		fw7QQc+xTH8XV3NECPCFXAShShs=
 		</data>
 		<key>Resources/readme.md</key>
 		<data>
@@ -392,11 +388,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Dj/oPtoRXrAVOU0/nUuZlDzs428=
+			fhxs1ojXEIUh4Njre+HZMTKjgr8=
 			</data>
 			<key>hash2</key>
 			<data>
-			T8nTwa9hhxxGbDT631JfTZ2wh4mvp+iSmhui9FzNPcw=
+			kgv8DLdbhaetT9ljH+BIKEhBYoy97N16kUPEJmj5FGE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -423,17 +419,6 @@
 			gUP5rVHd8KWwYpvqv44UMqw+Wi87YrUQ87FnEuS7kUM=
 			</data>
 		</dict>
-		<key>Resources/manifest.json</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			fw7QQc+xTH8XV3NECPCFXAShShs=
-			</data>
-			<key>hash2</key>
-			<data>
-			NIsCjhcnY6WbYE8O9a1Ejj/6Iqzze88zHv8JKvXmnjI=
-			</data>
-		</dict>
 		<key>Resources/readme.md</key>
 		<dict>
 			<key>hash</key>
@@ -449,22 +434,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TuKA3ESqNB7PQKervO2y3G5GQ5Q=
+			A84By7eEyLlFWsjGJ4L4uMA1wmw=
 			</data>
 			<key>hash2</key>
 			<data>
-			ODqiMLWhptd/uYD++VNey7xdkrKlIsNYKdestL9QW7w=
-			</data>
-		</dict>
-		<key>Windows/libjson.7.6.1.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			fg2DZX9H+OSXqKta13cYRCwT5MA=
-			</data>
-			<key>hash2</key>
-			<data>
-			XBCtWptz2V12rCHzUZ1tGJ0ou6ElweWhe/iTWBlzQ+I=
+			sfkL5YQPb7Cf+Yqh9D59G3FVao2wOgwMdbK5e2+R1+0=
 			</data>
 		</dict>
 		<key>Windows/msvcp140.dll</key>
@@ -476,39 +450,6 @@
 			<key>hash2</key>
 			<data>
 			u+zf2iVRsBqhYAXIgwWYLDYKn7m6PZvi+xXy6cbrgJ8=
-			</data>
-		</dict>
-		<key>Windows/openal32.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/n+7Edcx4epn/jjO40NrDcvCQN8=
-			</data>
-			<key>hash2</key>
-			<data>
-			SfC2evE0H2nOxBlAUpwO9VFCAoL0cfD4aficxKtjV8c=
-			</data>
-		</dict>
-		<key>Windows/sfml-audio-2.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			C61vSZwh3Gfyzd2aTOAQbczHp0I=
-			</data>
-			<key>hash2</key>
-			<data>
-			yaCjIKTC2tcudg/GYldHbQfOo3psMZjzG0xll0VCas0=
-			</data>
-		</dict>
-		<key>Windows/sfml-system-2.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			I4+33T6ULPFCUK1DztXtNZ6FMC4=
-			</data>
-			<key>hash2</key>
-			<data>
-			RiUVuOdi/YpH87U+DIh8fKSQFKLNRtm4JPRjSoqy1K8=
 			</data>
 		</dict>
 		<key>Windows/vcruntime140.dll</key>
@@ -526,22 +467,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			9R6E1K7a2BSO/avnFSG06kADKbc=
+			PODjg5DRBJxkYl119IQeIT9x6w4=
 			</data>
 			<key>hash2</key>
 			<data>
-			QTURXhY8w2KIJwHb3nn8KghU/cDbxgJGaqdG9CrGcBg=
-			</data>
-		</dict>
-		<key>Windows64/libjson.7.6.1.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			SwD1aEYpkrh9HIbfBhTZIXQd0tU=
-			</data>
-			<key>hash2</key>
-			<data>
-			fx4bDF+wGQoYaxfEI3Lim+JpNiPIt0C0xMCEbY+WtKM=
+			lP9oO9HufPdEHvf3PhwOAIT8vypr1hroTDCzsocQ+BM=
 			</data>
 		</dict>
 		<key>Windows64/msvcp140.dll</key>
@@ -555,39 +485,6 @@
 			dfx2ZVYxpK5y0BW46F+JlTfGA2Yco1o/KQmbjkyEcWw=
 			</data>
 		</dict>
-		<key>Windows64/openal32.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CQy9lBu7Ottc0IgLC/wmTfbFKkQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			4MLxgmcrcGZZsyuR773FtXp10kNo9djYYMEw3iGK7ec=
-			</data>
-		</dict>
-		<key>Windows64/sfml-audio-2.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			OgcDI6go22JBEqd0WvI/k6gE0yY=
-			</data>
-			<key>hash2</key>
-			<data>
-			2MSB1Aiy/TDLU/DZFYKtPR3CvElljAYhT+O0+5MN6as=
-			</data>
-		</dict>
-		<key>Windows64/sfml-system-2.dll</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			GBUxkcFM93DHGcZb66nlbSmMI4s=
-			</data>
-			<key>hash2</key>
-			<data>
-			BusQPg7t8BElO6bsuh0Yn46Mnsv/rGGaSk4i6EEu7cE=
-			</data>
-		</dict>
 		<key>Windows64/vcruntime140.dll</key>
 		<dict>
 			<key>hash</key>
@@ -598,6 +495,15 @@
 			<data>
 			OTedDDGKoZ+/s6xN6UqEYAIYzvrjPCu0QSf5lLOQv5A=
 			</data>
+		</dict>
+		<key>manifest.json</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			RmPzKEXmvOgCZ8BR+j3ZFZBpme0=
+			</data>
+			<key>requirement</key>
+			<string>identifier manifest and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = Y69CWUC25B</string>
 		</dict>
 	</dict>
 	<key>rules</key>
