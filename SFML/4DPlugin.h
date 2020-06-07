@@ -10,7 +10,14 @@
 
 #include "SFML/Config.hpp"
 #include "SFML/Audio.hpp"
+
+#define USE_JSON_CPP 1
+
+#if USE_JSON_CPP
+#include "json/json.h"
+#else
 #include "libjson/libjson.h"
+#endif
 
 // --- AUDIO
 void GET_RECORDING_DEVICES(sLONG_PTR *pResult, PackagePtr pParams);

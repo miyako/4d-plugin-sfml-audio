@@ -296,7 +296,7 @@
       <EntryPointSymbol>
       </EntryPointSymbol>
       <AdditionalLibraryDirectories>VC\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>common.lib;Winmm.lib;flac.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;libjson.lib;sfml-audio-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>jsoncpp.lib;common.lib;Winmm.lib;flac.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-audio-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -319,7 +319,7 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>common.lib;Winmm.lib;flac.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;libjson.lib;sfml-audio-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>jsoncpp.lib;common.lib;Winmm.lib;flac.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-audio-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>VC\x86_64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

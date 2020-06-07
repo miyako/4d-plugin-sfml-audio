@@ -52,6 +52,7 @@
 		D13116F41A03C7AF00DE1322 /* ARRAY_DATE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D13116F21A03C7AF00DE1322 /* ARRAY_DATE.cpp */; };
 		D13116F51A03C7AF00DE1322 /* ARRAY_DATE.h in Headers */ = {isa = PBXBuildFile; fileRef = D13116F31A03C7AF00DE1322 /* ARRAY_DATE.h */; };
 		D134D4AC1A030BA0008D14EF /* manifest.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = D134D4A91A030B06008D14EF /* manifest.json */; };
+		D1419C0E248CDD320004E6E0 /* libjsoncpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1419C0D248CDD320004E6E0 /* libjsoncpp.a */; };
 		D175D9CD1A02E8DD0006B569 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D175D9CC1A02E8DD0006B569 /* CoreGraphics.framework */; };
 		D1D74DD023F6F870007DF6D2 /* libsfml-audio-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DCE23F6F835007DF6D2 /* libsfml-audio-s.a */; };
 		D1D74DD123F6F870007DF6D2 /* libsfml-system-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D74DCF23F6F835007DF6D2 /* libsfml-system-s.a */; };
@@ -127,6 +128,7 @@
 		D13116F21A03C7AF00DE1322 /* ARRAY_DATE.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = ARRAY_DATE.cpp; path = Classes/ARRAY_DATE.cpp; sourceTree = "<group>"; };
 		D13116F31A03C7AF00DE1322 /* ARRAY_DATE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARRAY_DATE.h; path = Classes/ARRAY_DATE.h; sourceTree = "<group>"; };
 		D134D4A91A030B06008D14EF /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		D1419C0D248CDD320004E6E0 /* libjsoncpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsoncpp.a; path = a/libjsoncpp.a; sourceTree = "<group>"; };
 		D14D10DD1A03A8A5008B3411 /* constants.xlf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = constants.xlf; sourceTree = "<group>"; };
 		D175D9CC1A02E8DD0006B569 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D1D74DCE23F6F835007DF6D2 /* libsfml-audio-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsfml-audio-s.a"; path = "a/libsfml-audio-s.a"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1419C0E248CDD320004E6E0 /* libjsoncpp.a in Frameworks */,
 				D1D74DE223F6F9A2007DF6D2 /* OpenAL.framework in Frameworks */,
 				D1D74DD023F6F870007DF6D2 /* libsfml-audio-s.a in Frameworks */,
 				D13116C71A03B5B600DE1322 /* AppKit.framework in Frameworks */,
@@ -302,6 +305,7 @@
 		D1D74DC923F6E52A007DF6D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1419C0D248CDD320004E6E0 /* libjsoncpp.a */,
 				D1D74DE123F6F9A2007DF6D2 /* OpenAL.framework */,
 				D1D74DDF23F6F90D007DF6D2 /* libao.a */,
 				D1D74DDA23F6F8E6007DF6D2 /* libvorbis.a */,
@@ -455,7 +459,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test \"$CONFIGURATION\" == 'Deployment'; then\n    USER_NAME=keisuke.miyako@4d.com\n    UUID=`uuidgen | tr -d - | tr -d '\\n' | tr '[:upper:]' '[:lower:]'`\n    DEVELOPER_ID=`security find-identity -p codesigning -v | egrep 'Developer ID Application[^\"]+' -o`\n    PRODUCT_PATH=\"$CODESIGNING_FOLDER_PATH\"\n    xattr -cr \"$PRODUCT_PATH\"\n    codesign --remove-signature \"$PRODUCT_PATH\"\n    codesign --verbose --deep --timestamp --force --sign \"$DEVELOPER_ID\" \"$PRODUCT_PATH\"\n    DMG_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.dmg\"\n    ZIP_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.zip\"\n    rm \"$DMG_PATH\"\n    hdiutil create -format UDBZ -plist -srcfolder \"$PRODUCT_PATH\" \"$DMG_PATH\"\n    echo \"xcrun stapler staple \\\"$PRODUCT_PATH\\\"\"\n    echo \"hdiutil create -format UDBZ -plist -srcfolder  \\\"$PRODUCT_PATH\\\" \\\"$DMG_PATH\\\" \"\n    echo \"ditto -c -k --keepParent \\\"$PRODUCT_PATH\\\" \\\"$ZIP_PATH\\\" \"\n    xcrun altool --notarize-app --file \"$DMG_PATH\" --username \"$USER_NAME\" --password \"@keychain:altool\" --primary-bundle-id $PRODUCT_BUNDLE_IDENTIFIER.$UUID\n    echo \"spctl -a -vv -t install \\\"$PRODUCT_PATH\\\" \"\n    rm -f \"$ZIP_PATH\"\n    rm -f \"$DMG_PATH\"\nelse\n    echo \"No notarization performed as this is not a release build.\"\nfi\n\n";
+			shellScript = "if test \"$CONFIGURATION\" == 'Deployment'; then\n\n    USER_NAME=keisuke.miyako@4d.com\n    UUID=`uuidgen | tr -d - | tr -d '\\n' | tr '[:upper:]' '[:lower:]'`\n    DEVELOPER_ID=`security find-identity -p codesigning -v | egrep 'Developer ID Application[^\"]+' -o`\n    PRODUCT_PATH=\"$CODESIGNING_FOLDER_PATH\"\n    \n    #clean\n    xattr -cr \"$PRODUCT_PATH\"\n    codesign --remove-signature \"$PRODUCT_PATH\"\n    \n    #sign\n    codesign --verbose --deep --timestamp --force --sign \"$DEVELOPER_ID\" \"$PRODUCT_PATH\"\n    \n    #archive\n    DMG_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.dmg\"\n    ZIP_PATH=\"$PROJECT_DIR/$PRODUCT_NAME.zip\" #for windows\n    rm -f \"$DMG_PATH\"\n    hdiutil create -format UDBZ -plist -srcfolder \"$PRODUCT_PATH\" \"$DMG_PATH\"\n    rm -f \"$ZIP_PATH\"\n    ditto -c -k --keepParent \"$PRODUCT_PATH\" \"$ZIP_PATH\"\n    \n    # must staple the same dmg that was submitted for notarisation\n    # to staple the bundle inside the dmg too,\n    # one must:\n    # sign the bundle\n    # archive the bundle and notarise the dmg\n    # staple the bundle\n    # archive the bundle and notarise the dmg again\n    # staple the dmg\n    # here, we just staple the dmg. it should be sufficient    \n    \n    #round 2\n    echo \"# staple only the dmg\"\n    echo \"\\r\"\n    echo \"xcrun stapler staple \\\"$DMG_PATH\\\"\"\n    echo \"\\r\"\n    \n    #round 3 (optional)\n    echo \"# staple the bundle and the dmg\"\n    echo \"\\r\"\n    echo \"xcrun stapler staple \\\"$PRODUCT_PATH\\\"\"\n    echo \"rm -f \\\"$DMG_PATH\\\"\"\n    echo \"hdiutil create -format UDBZ -plist -srcfolder  \\\"$PRODUCT_PATH\\\" \\\"$DMG_PATH\\\" \"\n    echo \"xcrun altool --notarize-app --file \\\"$DMG_PATH\\\" --username \\\"$USER_NAME\\\" --password \\\"@keychain:altool\\\" --primary-bundle-id $PRODUCT_BUNDLE_IDENTIFIER.$UUID\"\n    echo \"\\r\"\n    \n    #round 1\n    xcrun altool --notarize-app --file \"$DMG_PATH\" --username \"$USER_NAME\" --password \"@keychain:altool\" --primary-bundle-id $PRODUCT_BUNDLE_IDENTIFIER.$UUID\n    \n    #for round 3    \n    UUID=`uuidgen | tr -d - | tr -d '\\n' | tr '[:upper:]' '[:lower:]'`\nelse\n    echo \"No notarization performed as this is not a release build.\"\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -508,7 +512,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.1;
+				CURRENT_PROJECT_VERSION = 3.2.0;
 				DEBUGGING_SYMBOLS = YES;
 				DEPLOYMENT_LOCATION = NO;
 				DEVELOPMENT_TEAM = "";
@@ -533,6 +537,7 @@
 					"$(PROJECT_DIR)/a",
 				);
 				LIBRARY_STYLE = Bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -559,7 +564,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.1;
+				CURRENT_PROJECT_VERSION = 3.2.0;
 				DEPLOYMENT_LOCATION = NO;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -581,6 +586,7 @@
 					"$(PROJECT_DIR)/a",
 				);
 				LIBRARY_STYLE = Bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -606,7 +612,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.1;
+				CURRENT_PROJECT_VERSION = 3.2.0;
 				DEPLOYMENT_LOCATION = NO;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -627,6 +633,7 @@
 					"$(PROJECT_DIR)/a",
 				);
 				LIBRARY_STYLE = Bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";

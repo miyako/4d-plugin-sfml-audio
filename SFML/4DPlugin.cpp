@@ -23,8 +23,11 @@ sf::SoundBufferRecorder *audioRecorder;
 
 #pragma mark JSON
 
-void json_conv(const char *value, std::wstring &u32)
-{
+#if USE_JSON_CPP
+#else
+
+void json_conv(const char *value, std::wstring &u32) {
+    
 	if(value)
 	{
 		C_TEXT t;
@@ -56,8 +59,8 @@ void json_conv(const char *value, std::wstring &u32)
 	
 }
 
-JSONNODE *json_parse_text_param(C_TEXT &t)
-{
+JSONNODE *json_parse_text_param(C_TEXT &t) {
+    
 	std::wstring u32;
 	
 #if VERSIONWIN
@@ -79,8 +82,8 @@ JSONNODE *json_parse_text_param(C_TEXT &t)
 	return json_parse((json_const json_char *)u32.c_str());
 }
 
-void json_set_text_param(JSONNODE *n, C_TEXT &t)
-{
+void json_set_text_param(JSONNODE *n, C_TEXT &t) {
+    
 	if(n)
 	{
 		json_char *json_string = json_write_formatted(n);
@@ -108,8 +111,8 @@ void json_set_text_param(JSONNODE *n, C_TEXT &t)
 	
 }
 
-BOOL json_get_stringA(JSONNODE *json, const wchar_t *name, std::string &value)
-{
+BOOL json_get_stringA(JSONNODE *json, const wchar_t *name, std::string &value) {
+    
 	value = (const char *)"";
 	
 	if(json)
@@ -149,8 +152,8 @@ BOOL json_get_stringA(JSONNODE *json, const wchar_t *name, std::string &value)
 	return !!value.length();
 }
 
-BOOL json_get_string(JSONNODE *json, const wchar_t *name, std::string &value)
-{
+BOOL json_get_string(JSONNODE *json, const wchar_t *name, std::string &value) {
+    
 	value = (const char *)"";
 	
 	if(json)
@@ -192,8 +195,8 @@ BOOL json_get_string(JSONNODE *json, const wchar_t *name, std::string &value)
 	return !!value.length();
 }
 
-void json_set_text(JSONNODE *n, const wchar_t *name, char *value)
-{
+void json_set_text(JSONNODE *n, const wchar_t *name, char *value) {
+    
 	if(n)
 	{
 		if(value)
@@ -205,44 +208,50 @@ void json_set_text(JSONNODE *n, const wchar_t *name, char *value)
 	}
 }
 
-void json_set_number(JSONNODE *n, const wchar_t *name, json_int_t value)
-{
+void json_set_number(JSONNODE *n, const wchar_t *name, json_int_t value) {
+    
 	if(n)
 	{
 		json_push_back(n, json_new_i(name, value));
 	}
 }
 
+#endif
+
 #pragma mark Init / Deinit
 
-bool IsProcessOnExit()
-{
-	C_TEXT name;
-	PA_long32 state, time;
-	PA_GetProcessInfo(PA_GetCurrentProcessNumber(), name, &state, &time);
-	CUTF16String procName(name.getUTF16StringPtr());
-	CUTF16String exitProcName((PA_Unichar *)"$\0x\0x\0\0\0");
-	return (!procName.compare(exitProcName));
-}
+bool IsProcessOnExit() {
+    
+     C_TEXT name;
+     PA_long32 state, time;
+     PA_GetProcessInfo(PA_GetCurrentProcessNumber(), name, &state, &time);
+     CUTF16String procName(name.getUTF16StringPtr());
+     CUTF16String exitProcName((PA_Unichar *)"$\0x\0x\0\0\0");
+     return (!procName.compare(exitProcName));
+ }
 
-//make sure it is OK to unload AL before SFML
-
-void OnStartup()
-{
+void OnStartup() {
+    
 	audioBuffer = new sf::SoundBuffer;
 	audioPlayer = new sf::Sound;
 	audioRecorder = new sf::SoundBufferRecorder;
 }
 
-void OnCloseProcess()
-{
-	if(IsProcessOnExit())
-	{
-		delete audioBuffer;
-		delete audioPlayer;
-		delete audioRecorder;
-	}
+void OnExit() {
+    
+    delete audioBuffer;
+    delete audioPlayer;
+    delete audioRecorder;
 }
+
+//do this to make sure it is OK to unload AL before SFML
+
+ void OnCloseProcess() {
+     
+     if(IsProcessOnExit()) {
+         OnExit();
+     }
+ }
 
 #pragma mark -
 
@@ -260,11 +269,11 @@ void PluginMain(PA_long32 selector, PA_PluginParameters params)
 			case kServerInitPlugin :
 				OnStartup();
 				break;
-				
-			case kCloseProcess :
-				OnCloseProcess();
-				break;
-				
+                
+            case kCloseProcess :
+                OnCloseProcess();
+                break;
+
 			case 5 :
 				SOUND_SET_DATA(params);
 				break;
@@ -475,29 +484,69 @@ void SOUND_Start_recording(sLONG_PTR *pResult, PackagePtr pParams)
 		
 		std::string device = audioRecorder->getDevice();
 
-		JSONNODE *json = json_parse_text_param(Param1);
-		
-		if (json)
-		{
-			JSONNODE *json_sampleRate = json_get(json, L"sampleRate");
-			if(json_sampleRate)
-			{
-				sampleRate = (unsigned int)json_as_int(json_sampleRate);
-			}
-			
-			JSONNODE *json_channelCount = json_get(json, L"channelCount");
-			if(json_channelCount)
-			{
-				channelCount = (unsigned int)json_as_int(json_channelCount);
-			}
-			
-			std::string deviceName;
-#if VERSIONMAC
-			if(json_get_string(json, L"device", deviceName))
+#if USE_JSON_CPP
+        
+        using namespace Json;
+        using namespace std;
+        CUTF8String u8;
+        Param1.copyUTF8String(&u8);
+        
+        CharReaderBuilder builder;
+        CharReader *reader = builder.newCharReader();
+        
+        Value root;
+        string errors;
+        
+        bool parse = reader->parse((const char *)u8.c_str(),
+                                   (const char *)u8.c_str() + u8.size(),
+                                   &root,
+                                   &errors);
+        delete reader;
 #else
-			if(json_get_stringA(json, L"device", deviceName))
+        JSONNODE *json = json_parse_text_param(Param1);
 #endif
+
+#if USE_JSON_CPP
+        if (parse)
+#else
+        if (json)
+#endif
+		{
+            
+#if USE_JSON_CPP
+            Value _sampleRate = root["sampleRate"];
+            if(_sampleRate.isNumeric()) {
+                sampleRate = _sampleRate.asUInt();
+            }
+            Value _channelCount = root["channelCount"];
+            if(_channelCount.isNumeric()) {
+                channelCount = _channelCount.asUInt();
+            }
+#else
+            JSONNODE *json_sampleRate = json_get(json, L"sampleRate");
+            if(json_sampleRate) {
+                sampleRate = (unsigned int)json_as_int(json_sampleRate);
+            }
+            JSONNODE *json_channelCount = json_get(json, L"channelCount");
+            if(json_channelCount) {
+                channelCount = (unsigned int)json_as_int(json_channelCount);
+            }
+#endif
+
+			std::string deviceName;
+ 
+#if USE_JSON_CPP
+            Value _device = root["device"];
+            if(_device.isString()) {
+                deviceName = _device.asString();
+#else
+            #if VERSIONMAC
+                        if(json_get_string(json, L"device", deviceName))
+            #else
+                        if(json_get_stringA(json, L"device", deviceName))
+            #endif
 			{
+#endif
 				if(deviceName.find(device) != 0)
 				{
 					audioRecorder->setDevice(deviceName);
@@ -510,8 +559,11 @@ void SOUND_Start_recording(sLONG_PTR *pResult, PackagePtr pParams)
 			}
 #endif
 			audioRecorder->setChannelCount(channelCount);
-			
-			json_delete(json);
+
+#if USE_JSON_CPP
+#else
+            json_delete(json);
+#endif
 		}
 		audioRecorder->start(sampleRate);
 	}else
@@ -522,10 +574,9 @@ void SOUND_Start_recording(sLONG_PTR *pResult, PackagePtr pParams)
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_Stop_recording(PA_PluginParameters params)
-{
+void SOUND_Stop_recording(PA_PluginParameters params) {
+    
 	PackagePtr pParams = (PackagePtr)params->fParameters;
-//	sLONG_PTR *pResult = (sLONG_PTR *)params->fResult;
 	
 	audioRecorder->stop();
 	
@@ -537,20 +588,35 @@ void SOUND_Stop_recording(PA_PluginParameters params)
 	unsigned int channelCount = audioRecorder->getChannelCount();
 	
 	sf::Uint64 sampleCount = recordedBuffer.getSampleCount();
-//	const sf::Int16* samples = recordedBuffer.getSamples();
 
-	PA_ReturnBlob(params, (void *)recordedBuffer.getSamples(), (PA_long32)(sampleCount * sizeof(sf::Int16)));
+	PA_ReturnBlob(params, (void *)recordedBuffer.getSamples(),
+                  (PA_long32)(sampleCount * sizeof(sf::Int16)));
 	
 	C_TEXT Param1;
 	
-	JSONNODE *json = json_new(JSON_NODE);
-	json_set_number(json, L"duration", t.asMilliseconds());
-	json_set_number(json, L"sampleRate", sampleRate);
-	json_set_number(json, L"channelCount", channelCount);
-	json_set_text(json, L"device", (char *)device.c_str());
-	json_set_text_param(json, Param1);
-	json_delete(json);
-	
+#if USE_JSON_CPP
+    using namespace Json;
+    Value root;
+    root["duration"] = t.asMilliseconds();
+    root["sampleRate"] = sampleRate;
+    root["channelCount"] = channelCount;
+    root["device"] = (char *)device.c_str();
+    
+    StreamWriterBuilder builder;
+    builder["indentation"] = "";
+    using namespace std;
+    string json = writeString(builder, root);
+    Param1.setUTF8String((const uint8_t *)json.c_str(), json.length());
+#else
+    JSONNODE *json = json_new(JSON_NODE);
+    json_set_number(json, L"duration", t.asMilliseconds());
+    json_set_number(json, L"sampleRate", sampleRate);
+    json_set_number(json, L"channelCount", channelCount);
+    json_set_text(json, L"device", (char *)device.c_str());
+    json_set_text_param(json, Param1);
+    json_delete(json);
+#endif
+    
 	Param1.toParamAtIndex(pParams, 1);
 }
 
@@ -558,8 +624,8 @@ void SOUND_Stop_recording(PA_PluginParameters params)
 
 #pragma mark PLAY
 
-void SOUND_SET_DATA(PA_PluginParameters params)
-{
+void SOUND_SET_DATA(PA_PluginParameters params) {
+    
 	PackagePtr pParams = (PackagePtr)params->fParameters;
 	
 	PA_Handle h = *(PA_Handle *)(pParams[0]);
@@ -573,8 +639,8 @@ void SOUND_SET_DATA(PA_PluginParameters params)
 	audioPlayer->setBuffer((*(audioBuffer)));
 }
 
-void SOUND_Get_data(PA_PluginParameters params)
-{
+void SOUND_Get_data(PA_PluginParameters params) {
+    
 	sf::Uint64 sampleCount = audioBuffer->getSampleCount();
 	
 	PA_ReturnBlob(params, (void *)audioBuffer->getSamples(), (PA_long32)(sampleCount * sizeof(sf::Int16)));
@@ -582,32 +648,32 @@ void SOUND_Get_data(PA_PluginParameters params)
 
 #pragma mark Properties
 
-void SOUND_Get_status(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_status(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT returnValue;
 	
 	returnValue.setIntValue(audioPlayer->getStatus());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_Get_duration(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_duration(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT returnValue;
 	
 	returnValue.setIntValue(audioBuffer->getDuration().asMilliseconds());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_Get_channel_count(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_channel_count(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT returnValue;
 	
 	returnValue.setIntValue(audioBuffer->getChannelCount());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_Get_sample_rate(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_sample_rate(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT returnValue;
 	
 	returnValue.setIntValue(audioBuffer->getSampleRate());
@@ -616,48 +682,48 @@ void SOUND_Get_sample_rate(sLONG_PTR *pResult, PackagePtr pParams)
 
 #pragma mark -
 
-void SOUND_Get_pitch(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_pitch(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_REAL returnValue;
 	
 	returnValue.setDoubleValue(audioPlayer->getPitch());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_SET_PITCH(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_SET_PITCH(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_REAL Param1;
 
 	Param1.fromParamAtIndex(pParams, 1);
 	audioPlayer->setPitch(Param1.getDoubleValue());
 }
 
-void SOUND_Get_volume(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_volume(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_REAL returnValue;
 	
 	returnValue.setDoubleValue(audioPlayer->getVolume());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_SET_VOLUME(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_SET_VOLUME(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_REAL Param1;
 
 	Param1.fromParamAtIndex(pParams, 1);
 	audioPlayer->setVolume(Param1.getDoubleValue());
 }
 
-void SOUND_Get_position(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_position(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT returnValue;
 	
 	returnValue.setIntValue(audioPlayer->getPlayingOffset().asMilliseconds());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_SET_POSITION(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_SET_POSITION(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT Param1;
 
 	Param1.fromParamAtIndex(pParams, 1);
@@ -665,16 +731,16 @@ void SOUND_SET_POSITION(sLONG_PTR *pResult, PackagePtr pParams)
 	audioPlayer->setPlayingOffset(sf::milliseconds(Param1.getIntValue()));
 }
 
-void SOUND_Get_loop(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_Get_loop(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT returnValue;
 	
 	returnValue.setIntValue(audioPlayer->getLoop());
 	returnValue.setReturn(pResult);
 }
 
-void SOUND_SET_LOOP(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_SET_LOOP(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	C_LONGINT Param1;
 
 	Param1.fromParamAtIndex(pParams, 1);
@@ -684,18 +750,18 @@ void SOUND_SET_LOOP(sLONG_PTR *pResult, PackagePtr pParams)
 
 #pragma mark Player
 
-void SOUND_PLAY(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_PLAY(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	audioPlayer->play();
 }
 
-void SOUND_PAUSE(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_PAUSE(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	audioPlayer->pause();
 }
 
-void SOUND_STOP(sLONG_PTR *pResult, PackagePtr pParams)
-{
+void SOUND_STOP(sLONG_PTR *pResult, PackagePtr pParams) {
+    
 	audioPlayer->stop();
 }
 
@@ -705,8 +771,8 @@ void SOUND_STOP(sLONG_PTR *pResult, PackagePtr pParams)
 
 #pragma mark Import / Export
 
-void EXPORT_AUDIO_FILE(PA_PluginParameters params)
-{
+void EXPORT_AUDIO_FILE(PA_PluginParameters params) {
+    
 	PackagePtr pParams = (PackagePtr)params->fParameters;
 	
 	C_TEXT Param1;
@@ -743,8 +809,8 @@ void EXPORT_AUDIO_FILE(PA_PluginParameters params)
 
 }
 
-void IMPORT_AUDIO_FILE(PA_PluginParameters params)
-{
+void IMPORT_AUDIO_FILE(PA_PluginParameters params) {
+    
 	PackagePtr pParams = (PackagePtr)params->fParameters;
 	
 	C_TEXT Param1;
