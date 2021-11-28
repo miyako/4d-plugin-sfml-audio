@@ -10,15 +10,11 @@ The plugin can **play** one audio file at a time. Support file formats are ``WAV
 
 The plugin can **record** from one audio capture device at a time. Every time the recording is stopped, a BLOB of sampling frames is returned. You can concatenate such BLOBs with ``COPY BLOB``. When done, use the ``EXPORT AUDIO FILE`` command to create a ``WAV``, ``OGG/Vorbis``, or ``FLAC`` file.
 
-### Platform
+![version](https://img.shields.io/badge/version-18%2B-EB8E5F)
+![platform](https://img.shields.io/static/v1?label=platform&message=mac-intel%20|%20mac-arm%20|%20win-32%20|%20win-64&color=blue)
+[![license](https://img.shields.io/github/license/miyako/4d-plugin-tidy-html5)](LICENSE)
+![downloads](https://img.shields.io/github/downloads/miyako/4d-plugin-tidy-html5/total)
 
-| carbon | cocoa | win32 | win64 |
-|:------:|:-----:|:---------:|:---------:|
-||<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|
-
-### Version
-
-<img width="32" height="32" src="https://user-images.githubusercontent.com/1725068/73986501-15964580-4981-11ea-9ac1-73c5cee50aae.png"> <img src="https://user-images.githubusercontent.com/1725068/73987971-db2ea780-4984-11ea-8ada-e25fb9c3cf4e.png" width="32" height="32" />
 ### Screenshot
 
 <img width="505" alt="screenshot" src="https://user-images.githubusercontent.com/1725068/28803879-951a2e96-769a-11e7-96dc-9d3c2f0a98b8.png">
