@@ -26,6 +26,14 @@ The plugin can **record** from one audio capture device at a time. Every time th
     endif()
 ```
 
+* fetch codec bottles
+
+```
+brew fetch --bottle-tag=arm64_big_sur libao
+brew fetch --bottle-tag=arm64_big_sur libogg
+brew fetch --bottle-tag=arm64_big_sur libvorbis
+brew fetch --bottle-tag=arm64_big_sur flac 
+```
 
 ### Screenshot
 

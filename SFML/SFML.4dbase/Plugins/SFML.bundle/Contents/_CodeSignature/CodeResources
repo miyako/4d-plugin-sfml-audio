@@ -100,7 +100,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wGvn9HJzFXwz4leDoxICprXstto=
+			/nUK7dh9NJbcV6N6Y1jnCqWAgtg=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -112,6 +112,10 @@
 		<key>Resources/license.md</key>
 		<data>
 		0ls06Eha4s995PxaDFqUJYmL3/k=
+		</data>
+		<key>Resources/manifest.json</key>
+		<data>
+		AEdPmI5cJ1zr6ZjWnqeum/CIqXc=
 		</data>
 		<key>Resources/readme.md</key>
 		<data>
@@ -292,7 +296,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			EERHDyjLIWZRfz3OgQL5sGIYHenJe00gdWDyivv1tAI=
+			qduxkHpjzE3EdboGip2m8Rv9/Y3h1LN6xnO2VoWe9mM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -309,6 +313,13 @@
 			<key>hash2</key>
 			<data>
 			gUP5rVHd8KWwYpvqv44UMqw+Wi87YrUQ87FnEuS7kUM=
+			</data>
+		</dict>
+		<key>Resources/manifest.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PXuKfBr28fCJAIYb8zZVHfzCQZvoDOAidrSMB3WR4pI=
 			</data>
 		</dict>
 		<key>Resources/readme.md</key>
@@ -359,15 +370,6 @@
 			<data>
 			OTedDDGKoZ+/s6xN6UqEYAIYzvrjPCu0QSf5lLOQv5A=
 			</data>
-		</dict>
-		<key>manifest.json</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			n9b4W0B3Yf8YFEpEjxkaWCfrfqM=
-			</data>
-			<key>requirement</key>
-			<string>identifier manifest and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = Y69CWUC25B</string>
 		</dict>
 	</dict>
 	<key>rules</key>
