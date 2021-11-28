@@ -15,6 +15,18 @@ The plugin can **record** from one audio capture device at a time. Every time th
 [![license](https://img.shields.io/github/license/miyako/4d-plugin-tidy-html5)](LICENSE)
 ![downloads](https://img.shields.io/github/downloads/miyako/4d-plugin-tidy-html5/total)
 
+### Remarks for Apple Silicon
+
+* accept arm64 as valid architecture (or just fix in Xcode)
+
+```
+# only the default architecture (i.e. 64-bit) is supported
+    if(NOT CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
+        message(FATAL_ERROR "Only 64-bit architecture is supported")
+    endif()
+```
+
+
 ### Screenshot
 
 <img width="505" alt="screenshot" src="https://user-images.githubusercontent.com/1725068/28803879-951a2e96-769a-11e7-96dc-9d3c2f0a98b8.png">
