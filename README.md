@@ -1,3 +1,8 @@
+![version](https://img.shields.io/badge/version-18%2B-EB8E5F)
+![platform](https://img.shields.io/static/v1?label=platform&message=mac-intel%20|%20mac-arm%20|%20win-32%20|%20win-64&color=blue)
+[![license](https://img.shields.io/github/license/miyako/4d-plugin-tidy-html5)](LICENSE)
+![downloads](https://img.shields.io/github/downloads/miyako/4d-plugin-tidy-html5/total)
+
 # 4d-plugin-sfml-audio
 
 Record and play wave audio. 
@@ -9,11 +14,6 @@ Updated to SFML ``2.5.1``
 The plugin can **play** one audio file at a time. Support file formats are ``WAV``, ``OGG/Vorbis``, and ``FLAC``. You can load the data using either ``IMPORT AUDIO FILE`` or ``SOUND SET DATA``.
 
 The plugin can **record** from one audio capture device at a time. Every time the recording is stopped, a BLOB of sampling frames is returned. You can concatenate such BLOBs with ``COPY BLOB``. When done, use the ``EXPORT AUDIO FILE`` command to create a ``WAV``, ``OGG/Vorbis``, or ``FLAC`` file.
-
-![version](https://img.shields.io/badge/version-18%2B-EB8E5F)
-![platform](https://img.shields.io/static/v1?label=platform&message=mac-intel%20|%20mac-arm%20|%20win-32%20|%20win-64&color=blue)
-[![license](https://img.shields.io/github/license/miyako/4d-plugin-tidy-html5)](LICENSE)
-![downloads](https://img.shields.io/github/downloads/miyako/4d-plugin-tidy-html5/total)
 
 ### Remarks for Apple Silicon
 
