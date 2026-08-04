@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE base SYSTEM "http://www.4d.com/dtd/2007/base.dtd" >
+<base name="SFML" uuid="30F20A15D5558348BD9812A1C6C8C23A" collation_locale="en">
+	<schema name="DEFAULT_SCHEMA"/>
+	<base_extra data_file_path=":SFML.4DD" package_name="SFML" structure_file_name="SFML" __stringCompHash="icu:77.1.0" __keywordBuildingHash="icu:77.1.0"/>
+</base>

@@ -1,0 +1,59 @@
+{
+	"destination": "detailScreen",
+	"windowSizingX": "fixed",
+	"windowSizingY": "fixed",
+	"width": 250,
+	"height": 55,
+	"menuBar": "Menu Bar #1",
+	"markerHeader": 15,
+	"markerBody": 200,
+	"markerBreak": 220,
+	"markerFooter": 240,
+	"events": [
+		"onLoad",
+		"onUnload"
+	],
+	"method": "method.4dm",
+	"pageFormat": {
+		"paperName": "A4",
+		"paperWidth": "842pt",
+		"paperHeight": "595pt"
+	},
+	"pages": [
+		null,
+		{
+			"objects": {
+				"ピクチャー2": {
+					"type": "picture",
+					"top": 0,
+					"left": 0,
+					"width": 250,
+					"height": 55,
+					"pictureFormat": "truncatedTopLeft",
+					"picture": "/RESOURCES/images/05be978cb80b9c58035083ec3b01a133_t.jpeg"
+				},
+				"Pitch": {
+					"type": "ruler",
+					"top": 4,
+					"left": 0,
+					"width": 250,
+					"height": 55,
+					"labelsPlacement": "right",
+					"min": 1,
+					"max": 10,
+					"graduationStep": 1,
+					"numberFormat": "### ##0",
+					"focusable": false,
+					"method": "ObjectMethods/Pitch.4dm",
+					"events": [
+						"onClick",
+						"onDataChange"
+					]
+				}
+			},
+			"entryOrder": [
+				"Pitch"
+			]
+		}
+	]
+}

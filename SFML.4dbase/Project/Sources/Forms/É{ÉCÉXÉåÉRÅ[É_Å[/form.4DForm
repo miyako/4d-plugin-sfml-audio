@@ -1,0 +1,234 @@
+{
+	"destination": "detailScreen",
+	"windowSizingY": "fixed",
+	"formSizeAnchor": "ピクチャー2",
+	"rightMargin": 0,
+	"bottomMargin": 0,
+	"menuBar": "Menu Bar #1",
+	"markerHeader": 15,
+	"markerBody": 200,
+	"markerBreak": 220,
+	"markerFooter": 240,
+	"events": [
+		"onLoad",
+		"onUnload",
+		"onTimer"
+	],
+	"method": "method.4dm",
+	"pageFormat": {
+		"paperName": "A4",
+		"paperWidth": "842pt",
+		"paperHeight": "595pt"
+	},
+	"pages": [
+		{
+			"objects": {
+				"ピクチャー2": {
+					"type": "picture",
+					"top": 0,
+					"left": 0,
+					"width": 505,
+					"height": 170,
+					"sizingX": "grow",
+					"sizingY": "grow",
+					"pictureFormat": "tiled",
+					"picture": "/RESOURCES/images/05be978cb80b9c58035083ec3b01a133_t.jpeg"
+				},
+				"ピクチャー1": {
+					"type": "picture",
+					"top": 15,
+					"left": 5,
+					"width": 96,
+					"height": 96,
+					"pictureFormat": "scaled",
+					"picture": "/RESOURCES/images/Microphone-icon.png"
+				},
+				"Rec": {
+					"type": "button",
+					"top": 69,
+					"left": 93,
+					"width": 120,
+					"height": 42,
+					"focusable": false,
+					"text": "　録音",
+					"icon": "/RESOURCES/images/rec.png",
+					"iconFrames": 4,
+					"textPlacement": "right",
+					"style": "roundedBevel",
+					"textAlign": "left",
+					"method": "ObjectMethods/Rec.4dm",
+					"events": [
+						"onClick",
+						"onLongClick"
+					]
+				},
+				"Stop": {
+					"type": "button",
+					"top": 69,
+					"left": 223,
+					"width": 120,
+					"height": 42,
+					"focusable": false,
+					"text": "　停止",
+					"icon": "/RESOURCES/images/stop.png",
+					"iconFrames": 4,
+					"textPlacement": "right",
+					"style": "roundedBevel",
+					"textAlign": "left",
+					"method": "ObjectMethods/Stop.4dm",
+					"events": [
+						"onClick"
+					]
+				},
+				"Play": {
+					"type": "button",
+					"top": 69,
+					"left": 353,
+					"width": 120,
+					"height": 42,
+					"focusable": false,
+					"text": "　再生",
+					"icon": "/RESOURCES/images/play.png",
+					"iconFrames": 4,
+					"textPlacement": "right",
+					"style": "roundedBevel",
+					"textAlign": "left",
+					"method": "ObjectMethods/Play.4dm",
+					"events": [
+						"onClick"
+					]
+				},
+				"Prefs": {
+					"type": "button",
+					"top": 10,
+					"left": 413,
+					"width": 60,
+					"height": 30,
+					"sizingX": "move",
+					"focusable": false,
+					"text": "設定",
+					"icon": "/RESOURCES/images/haguruma-icon01.png",
+					"textPlacement": "right",
+					"style": "roundedBevel",
+					"textAlign": "left",
+					"method": "ObjectMethods/Prefs.4dm",
+					"events": [
+						"onClick"
+					]
+				},
+				"Settings": {
+					"type": "input",
+					"top": 180,
+					"left": 0,
+					"width": 505,
+					"height": 41,
+					"visibility": "hidden",
+					"sizingY": "grow",
+					"dataSourceTypeHint": "object",
+					"textAlign": "left",
+					"fill": "transparent",
+					"borderStyle": "none",
+					"enterable": false,
+					"dragging": "none",
+					"dropping": "none"
+				},
+				"TimeElapsed": {
+					"type": "subform",
+					"top": 7,
+					"left": 95,
+					"width": 117,
+					"height": 60,
+					"dataSourceTypeHint": "time",
+					"detailForm": "Digital Clock",
+					"focusable": false,
+					"hideFocusRing": false,
+					"doubleClickInRowAction": "editSubrecord",
+					"selectionMode": "multiple",
+					"printFrame": "variable",
+					"method": "ObjectMethods/TimeElapsed.4dm",
+					"events": [
+						"onLoad"
+					]
+				},
+				"Volume": {
+					"type": "button",
+					"top": 130,
+					"left": 413,
+					"width": 60,
+					"height": 30,
+					"sizingX": "move",
+					"focusable": false,
+					"text": "音量",
+					"icon": "/RESOURCES/images/volume.png",
+					"textPlacement": "right",
+					"style": "roundedBevel",
+					"textAlign": "left",
+					"method": "ObjectMethods/Volume.4dm",
+					"events": [
+						"onClick"
+					]
+				},
+				"PlayPosition": {
+					"type": "subform",
+					"top": 7,
+					"left": 215,
+					"width": 117,
+					"height": 60,
+					"dataSourceTypeHint": "time",
+					"detailForm": "Digital Clock",
+					"focusable": false,
+					"hideFocusRing": false,
+					"doubleClickInRowAction": "editSubrecord",
+					"selectionMode": "multiple",
+					"printFrame": "variable",
+					"method": "ObjectMethods/PlayPosition.4dm",
+					"events": [
+						"onLoad"
+					]
+				},
+				"Pitch": {
+					"type": "button",
+					"top": 130,
+					"left": 343,
+					"width": 60,
+					"height": 30,
+					"sizingX": "move",
+					"focusable": false,
+					"text": "速度",
+					"icon": "/RESOURCES/images/chrono.png",
+					"textPlacement": "right",
+					"style": "roundedBevel",
+					"textAlign": "left",
+					"method": "ObjectMethods/Pitch.4dm",
+					"events": [
+						"onClick"
+					]
+				},
+				"Progress": {
+					"type": "ruler",
+					"top": 135,
+					"left": 6,
+					"width": 332,
+					"height": 24,
+					"sizingX": "grow",
+					"min": 1,
+					"max": 100,
+					"graduationStep": 1,
+					"focusable": false,
+					"method": "ObjectMethods/Progress.4dm",
+					"events": [
+						"onClick",
+						"onDataChange"
+					]
+				}
+			},
+			"entryOrder": [
+				"Settings",
+				"TimeElapsed",
+				"PlayPosition",
+				"Progress"
+			]
+		},
+		null
+	]
+}

@@ -1,0 +1,203 @@
+{
+	"Sources/Methods/Method1.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.334Z"
+	},
+	"Sources/Methods/Recording.4dm": {
+		"startSelection": 35,
+		"endSelection": 35,
+		"firstSelectedLine": 13,
+		"lastSelectedLine": 13,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.335Z"
+	},
+	"Sources/Methods/W_REC.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 27,
+		"lastSelectedLine": 27,
+		"folding": [
+			34,
+			38,
+			57,
+			63,
+			67,
+			71,
+			75
+		],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.335Z"
+	},
+	"Sources/Methods/F_REC.4dm": {
+		"startSelection": 22,
+		"endSelection": 12,
+		"firstSelectedLine": 24,
+		"lastSelectedLine": 24,
+		"folding": [
+			12,
+			14,
+			26,
+			86,
+			92,
+			94,
+			97,
+			101,
+			112,
+			125,
+			147,
+			153,
+			159,
+			180,
+			182,
+			183,
+			185,
+			188,
+			191,
+			196,
+			198
+		],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.336Z"
+	},
+	"Sources/Methods/É{ÉCÉXÉåÉRÅ[É_Å[.4dm": {
+		"startSelection": 7,
+		"endSelection": 7,
+		"firstSelectedLine": 9,
+		"lastSelectedLine": 9,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.336Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/method.4dm": {
+		"startSelection": 14,
+		"endSelection": 0,
+		"firstSelectedLine": 9,
+		"lastSelectedLine": 9,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.341Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Rec.4dm": {
+		"startSelection": 9,
+		"endSelection": 9,
+		"firstSelectedLine": 9,
+		"lastSelectedLine": 9,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.658Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Stop.4dm": {
+		"startSelection": 0,
+		"endSelection": 5,
+		"firstSelectedLine": 14,
+		"lastSelectedLine": 14,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.658Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Play.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 1,
+		"lastSelectedLine": 1,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.658Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Prefs.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 62,
+		"lastSelectedLine": 62,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.659Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/TimeElapsed.4dm": {
+		"startSelection": 57,
+		"endSelection": 49,
+		"firstSelectedLine": 4,
+		"lastSelectedLine": 4,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.659Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Volume.4dm": {
+		"startSelection": 17,
+		"endSelection": 17,
+		"firstSelectedLine": 5,
+		"lastSelectedLine": 5,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.659Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/PlayPosition.4dm": {
+		"startSelection": 58,
+		"endSelection": 58,
+		"firstSelectedLine": 4,
+		"lastSelectedLine": 4,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.659Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Pitch.4dm": {
+		"startSelection": 24,
+		"endSelection": 24,
+		"firstSelectedLine": 6,
+		"lastSelectedLine": 6,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.660Z"
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Progress.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 6,
+		"lastSelectedLine": 6,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.660Z"
+	},
+	"Sources/Forms/É{ÉäÉÖÅ[ÉÄ/method.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 9,
+		"lastSelectedLine": 9,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.660Z"
+	},
+	"Sources/Forms/É{ÉäÉÖÅ[ÉÄ/ObjectMethods/Volume.4dm": {
+		"startSelection": 6,
+		"endSelection": 6,
+		"firstSelectedLine": 9,
+		"lastSelectedLine": 9,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.661Z"
+	},
+	"Sources/Forms/ÉsÉbÉ`/method.4dm": {
+		"startSelection": 11,
+		"endSelection": 11,
+		"firstSelectedLine": 6,
+		"lastSelectedLine": 6,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.661Z"
+	},
+	"Sources/Forms/ÉsÉbÉ`/ObjectMethods/Pitch.4dm": {
+		"startSelection": 6,
+		"endSelection": 6,
+		"firstSelectedLine": 9,
+		"lastSelectedLine": 9,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2026-08-04T10:55:38.662Z"
+	}
+}

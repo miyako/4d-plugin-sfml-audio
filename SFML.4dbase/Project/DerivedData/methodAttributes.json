@@ -1,0 +1,40 @@
+{
+	"methods": {
+		"F_REC": {
+			"timeStamp": "2026-08-04T10:55:38Z",
+			"attributes": {
+				"invisible": true
+			}
+		},
+		"Recording": {
+			"timeStamp": "2026-08-04T10:55:38Z",
+			"attributes": {
+				"invisible": true
+			}
+		},
+		"W_REC": {
+			"timeStamp": "2026-08-04T10:55:38Z",
+			"attributes": {
+				"invisible": true
+			}
+		},
+		"Method2": {
+			"timeStamp": "2026-08-04T10:55:38Z",
+			"attributes": {
+				"invisible": true
+			}
+		},
+		"Method1": {
+			"timeStamp": "2026-08-04T10:55:38Z",
+			"attributes": {
+				"invisible": true
+			}
+		},
+		"(W_PLAY)": {
+			"timeStamp": "2026-08-04T10:55:38Z",
+			"attributes": {
+				"invisible": true
+			}
+		}
+	}
+}

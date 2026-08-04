@@ -1,0 +1,128 @@
+{
+	"Sources/Methods/Method1.4dm": {
+		"left": 393,
+		"top": 130,
+		"width": 380,
+		"height": 496
+	},
+	"Sources/Methods/Method2.4dm": {
+		"left": 588,
+		"top": 150,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Methods/Recording.4dm": {
+		"left": 537,
+		"top": 128,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Methods/W_REC.4dm": {
+		"left": 345,
+		"top": 153,
+		"width": 846,
+		"height": 615
+	},
+	"Sources/Methods/F_REC.4dm": {
+		"left": 335,
+		"top": 107,
+		"width": 834,
+		"height": 617
+	},
+	"Sources/Methods/É{ÉCÉXÉåÉRÅ[É_Å[.4dm": {
+		"left": 417,
+		"top": 157,
+		"width": 772,
+		"height": 496
+	},
+	"Trash/Methods/(W_PLAY).4dm": {
+		"left": 59,
+		"top": 254,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/method.4dm": {
+		"left": 1583,
+		"top": 126,
+		"width": 759,
+		"height": 662
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Rec.4dm": {
+		"left": 485,
+		"top": 187,
+		"width": 772,
+		"height": 550
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Stop.4dm": {
+		"left": 216,
+		"top": 132,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Play.4dm": {
+		"left": 32,
+		"top": 145,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Prefs.4dm": {
+		"left": 453,
+		"top": 113,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/TimeElapsed.4dm": {
+		"left": 417,
+		"top": 157,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Volume.4dm": {
+		"left": 278,
+		"top": 274,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/PlayPosition.4dm": {
+		"left": 417,
+		"top": 157,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Pitch.4dm": {
+		"left": 417,
+		"top": 157,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉCÉXÉåÉRÅ[É_Å[/ObjectMethods/Progress.4dm": {
+		"left": 278,
+		"top": 212,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉäÉÖÅ[ÉÄ/method.4dm": {
+		"left": 278,
+		"top": 212,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/É{ÉäÉÖÅ[ÉÄ/ObjectMethods/Volume.4dm": {
+		"left": 278,
+		"top": 212,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/ÉsÉbÉ`/method.4dm": {
+		"left": 417,
+		"top": 157,
+		"width": 772,
+		"height": 496
+	},
+	"Sources/Forms/ÉsÉbÉ`/ObjectMethods/Pitch.4dm": {
+		"left": 417,
+		"top": 157,
+		"width": 772,
+		"height": 496
+	}
+}
