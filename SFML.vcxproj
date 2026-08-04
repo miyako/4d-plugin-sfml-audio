@@ -154,6 +154,7 @@
     <ProjectGuid>{7A96E65F-9359-489F-A82A-C705EAE67CC4}</ProjectGuid>
     <RootNamespace>My4DPlugin</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -166,7 +167,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -311,6 +312,10 @@
       <CallingConvention>Cdecl</CallingConvention>
       <OmitFramePointers>false</OmitFramePointers>
       <DisableSpecificWarnings>4005;4800;4244;4068;4267</DisableSpecificWarnings>
+      <LanguageStandard>
+      </LanguageStandard>
+      <LanguageStandard_C>
+      </LanguageStandard_C>
     </ClCompile>
     <Link>
       <OutputFile>$(TargetPath)</OutputFile>
