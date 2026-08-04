@@ -26,7 +26,7 @@ env:
   PRODUCT_NAME: SFML
   XCODE_PROJECT: SFML.xcodeproj
   VCX_SOLUTION: SFML.sln
-  MACOS_DEPLOYMENT_TARGET: '10.13'
+  MACOS_DEPLOYMENT_TARGET: '10.15'
   # --------------------------------------------------------------
 
 concurrency:
