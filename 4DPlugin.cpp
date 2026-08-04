@@ -414,20 +414,23 @@ void GET_RECORDING_DEVICES(sLONG_PTR *pResult, PackagePtr pParams)
 		}
 #else
 		const ALchar* deviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
-		if(deviceList) Param1.setSize(1);
-		while (*deviceList)
+		if(deviceList)
 		{
-			std::string deviceName = std::string(deviceList, strlen(deviceList));
-			
-			int len = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)deviceName.c_str(), deviceName.length(), NULL, 0);
-			if (len) {
-				std::vector<uint8_t> buf((len + 1) * sizeof(PA_Unichar));
-				if (MultiByteToWideChar(CP_ACP, 0, (LPCSTR)deviceName.c_str(), deviceName.length(), (LPWSTR)&buf[0], len)) {
-					CUTF16String name = CUTF16String((const PA_Unichar *)&buf[0]);
-					Param1.appendUTF16String(&name);
+			Param1.setSize(1);
+			while (*deviceList)
+			{
+				std::string deviceName = std::string(deviceList, strlen(deviceList));
+				
+				int len = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)deviceName.c_str(), deviceName.length(), NULL, 0);
+				if (len) {
+					std::vector<uint8_t> buf((len + 1) * sizeof(PA_Unichar));
+					if (MultiByteToWideChar(CP_ACP, 0, (LPCSTR)deviceName.c_str(), deviceName.length(), (LPWSTR)&buf[0], len)) {
+						CUTF16String name = CUTF16String((const PA_Unichar *)&buf[0]);
+						Param1.appendUTF16String(&name);
+					}
 				}
+				deviceList += std::strlen(deviceList) + 1;
 			}
-			deviceList += std::strlen(deviceList) + 1;
 		}
 #endif
 	}
@@ -445,14 +448,17 @@ void Get_default_recording_device(sLONG_PTR *pResult, PackagePtr pParams)
 		returnValue.setUTF8String((const uint8_t *)defaultDevice.c_str(), (uint32_t)defaultDevice.length());
 #else
 		const ALCchar *devicename = alcGetString(NULL, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER);
-		std::string defaultDevice = std::string(devicename, strlen(devicename));
-		
-		int len = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)defaultDevice.c_str(), defaultDevice.length(), NULL, 0);
-		if (len) {
-			std::vector<uint8_t> buf((len + 1) * sizeof(PA_Unichar));
-			if (MultiByteToWideChar(CP_ACP, 0, (LPCSTR)defaultDevice.c_str(), defaultDevice.length(), (LPWSTR)&buf[0], len)) {
-				CUTF16String name = CUTF16String((const PA_Unichar *)&buf[0]);
-				returnValue.setUTF16String(&name);
+		if(devicename)
+		{
+			std::string defaultDevice = std::string(devicename, strlen(devicename));
+			
+			int len = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)defaultDevice.c_str(), defaultDevice.length(), NULL, 0);
+			if (len) {
+				std::vector<uint8_t> buf((len + 1) * sizeof(PA_Unichar));
+				if (MultiByteToWideChar(CP_ACP, 0, (LPCSTR)defaultDevice.c_str(), defaultDevice.length(), (LPWSTR)&buf[0], len)) {
+					CUTF16String name = CUTF16String((const PA_Unichar *)&buf[0]);
+					returnValue.setUTF16String(&name);
+				}
 			}
 		}
 #endif
@@ -479,7 +485,7 @@ void SOUND_Start_recording(sLONG_PTR *pResult, PackagePtr pParams)
 		
 #if VERSIONWIN
 		const ALCchar *devicename = alcGetString(NULL, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER);
-		std::string defaultDevice = std::string(devicename, strlen(devicename));
+		std::string defaultDevice = devicename ? std::string(devicename, strlen(devicename)) : std::string();
 #endif
 		
 		std::string device = audioRecorder->getDevice();
@@ -547,7 +553,7 @@ void SOUND_Start_recording(sLONG_PTR *pResult, PackagePtr pParams)
             #endif
 			{
 #endif
-				if(deviceName.find(device) != 0)
+				if(deviceName != device)
 				{
 					audioRecorder->setDevice(deviceName);
 				}
