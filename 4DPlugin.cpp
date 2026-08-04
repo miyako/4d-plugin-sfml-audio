@@ -11,6 +11,7 @@
 
 #include "4DPluginAPI.h"
 #include "4DPlugin.h"
+#include <cstdint>
 
 #if VERSIONWIN
 #include <OpenAL/al.h>
@@ -233,7 +234,7 @@ bool IsProcessOnExit() {
 void OnStartup() {
     
 	audioBuffer = new sf::SoundBuffer;
-	audioPlayer = new sf::Sound;
+	audioPlayer = new sf::Sound(*audioBuffer);
 	audioRecorder = new sf::SoundBufferRecorder;
 }
 
@@ -593,10 +594,10 @@ void SOUND_Stop_recording(PA_PluginParameters params) {
 	unsigned int sampleRate = audioRecorder->getSampleRate();
 	unsigned int channelCount = audioRecorder->getChannelCount();
 	
-	sf::Uint64 sampleCount = recordedBuffer.getSampleCount();
+	std::uint64_t sampleCount = recordedBuffer.getSampleCount();
 
 	PA_ReturnBlob(params, (void *)recordedBuffer.getSamples(),
-                  (PA_long32)(sampleCount * sizeof(sf::Int16)));
+                  (PA_long32)(sampleCount * sizeof(std::int16_t)));
 	
 	C_TEXT Param1;
 	
@@ -647,9 +648,9 @@ void SOUND_SET_DATA(PA_PluginParameters params) {
 
 void SOUND_Get_data(PA_PluginParameters params) {
     
-	sf::Uint64 sampleCount = audioBuffer->getSampleCount();
+	std::uint64_t sampleCount = audioBuffer->getSampleCount();
 	
-	PA_ReturnBlob(params, (void *)audioBuffer->getSamples(), (PA_long32)(sampleCount * sizeof(sf::Int16)));
+	PA_ReturnBlob(params, (void *)audioBuffer->getSamples(), (PA_long32)(sampleCount * sizeof(std::int16_t)));
 }
 
 #pragma mark Properties
@@ -658,7 +659,7 @@ void SOUND_Get_status(sLONG_PTR *pResult, PackagePtr pParams) {
     
 	C_LONGINT returnValue;
 	
-	returnValue.setIntValue(audioPlayer->getStatus());
+	returnValue.setIntValue(static_cast<int>(audioPlayer->getStatus()));
 	returnValue.setReturn(pResult);
 }
 
@@ -741,7 +742,7 @@ void SOUND_Get_loop(sLONG_PTR *pResult, PackagePtr pParams) {
     
 	C_LONGINT returnValue;
 	
-	returnValue.setIntValue(audioPlayer->getLoop());
+	returnValue.setIntValue(audioPlayer->isLooping());
 	returnValue.setReturn(pResult);
 }
 
@@ -751,7 +752,7 @@ void SOUND_SET_LOOP(sLONG_PTR *pResult, PackagePtr pParams) {
 
 	Param1.fromParamAtIndex(pParams, 1);
 
-	audioPlayer->setLoop(Param1.getIntValue());
+	audioPlayer->setLooping(Param1.getIntValue() != 0);
 }
 
 #pragma mark Player
@@ -799,12 +800,27 @@ void EXPORT_AUDIO_FILE(PA_PluginParameters params) {
 		Param4.fromParamAtIndex(pParams, 4);
 		unsigned int sampleRate = Param3.getIntValue();
 		unsigned int channelCount = Param4.getIntValue();
-		
-		sf::SoundBuffer exportBuffer;
-		exportBuffer.loadFromSamples((const sf::Int16 *)PA_LockHandle(h),
-																 PA_GetHandleSize(h) / sizeof(sf::Int16),
-																 channelCount, sampleRate);
-		PA_UnlockHandle(h);
+                sf::SoundBuffer exportBuffer;
+                {
+                    const std::int16_t* samplesPtr = reinterpret_cast<const std::int16_t*>(PA_LockHandle(h));
+                    std::uint64_t samplesInFile = PA_GetHandleSize(h) / sizeof(std::int16_t);
+                    // SFML3 requires channelMap - build it from channelCount
+                    std::vector<sf::SoundChannel> channelMap;
+                    if (channelCount == 1) {
+                        channelMap = {sf::SoundChannel::Mono};
+                    } else if (channelCount == 2) {
+                        channelMap = {sf::SoundChannel::FrontLeft, sf::SoundChannel::FrontRight};
+                    } else if (channelCount == 6) {
+                        channelMap = {sf::SoundChannel::FrontLeft, sf::SoundChannel::FrontRight, sf::SoundChannel::FrontCenter, sf::SoundChannel::LowFrequencyEffects, sf::SoundChannel::BackLeft, sf::SoundChannel::BackRight};
+                    } else {
+                        // generic fallback - fill with first N enum values (works for 4ch etc)
+                        channelMap.reserve(channelCount);
+                        for (unsigned int i=0; i<channelCount; ++i) channelMap.push_back(static_cast<sf::SoundChannel>(i));
+                    }
+                    // In SFML3, 2nd param is sampleCount (total samples), 3rd is channelCount
+                    exportBuffer.loadFromSamples(samplesPtr, samplesInFile, channelCount, sampleRate, channelMap);
+                }
+                PA_UnlockHandle(h);
 		exportBuffer.saveToFile(filename);
 	}
 	else
