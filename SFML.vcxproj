@@ -312,10 +312,8 @@
       <CallingConvention>Cdecl</CallingConvention>
       <OmitFramePointers>false</OmitFramePointers>
       <DisableSpecificWarnings>4005;4800;4244;4068;4267</DisableSpecificWarnings>
-      <LanguageStandard>
-      </LanguageStandard>
-      <LanguageStandard_C>
-      </LanguageStandard_C>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <OutputFile>$(TargetPath)</OutputFile>
