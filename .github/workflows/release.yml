@@ -26,7 +26,7 @@ permissions:
 
 env:
   # ---- only this needs editing per-project ----
-  PRODUCT_NAME: Time and Number
+  PRODUCT_NAME: SFML
   MACOS_DEPLOYMENT_TARGET: '10.13'
   # static base for this project (intentional)
   BASE_DIR: test
