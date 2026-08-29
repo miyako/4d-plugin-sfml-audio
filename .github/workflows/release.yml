@@ -5,6 +5,12 @@
 #
 # Trigger: push a tag matching v*.*.* (either by hand, or via bump-version.yml).
 # You can also run it manually against an existing tag with workflow_dispatch.
+#
+# PORTABILITY: Edit only PRODUCT_NAME below. Everything else is derived.
+# Canonical 4D layout is enforced:
+#   <Product>.4dbase/Plugins/<Product>.bundle/Contents/MacOS/<Product>
+#   <Product>.4dbase/Plugins/<Product>.bundle/Contents/Windows64/<Product>.4DX
+#   <Product>.4dbase/Plugins/<Product>.bundle/Contents/Resources/...
 
 name: Build & Release
 
@@ -22,12 +28,10 @@ permissions:
   contents: write
 
 env:
-  # ---- edit these per-project, everything else is generic ----
+  # ---- only this needs editing per-project ----
   PRODUCT_NAME: SFML
-  XCODE_PROJECT: SFML.xcodeproj
-  VCX_SOLUTION: SFML.sln
-  MACOS_DEPLOYMENT_TARGET: '10.15'
-  # --------------------------------------------------------------
+  MACOS_DEPLOYMENT_TARGET: '10.13'
+  # ---------------------------------------------
 
 concurrency:
   group: release-${{ github.ref }}
@@ -59,30 +63,51 @@ jobs:
       - name: setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: clean stale bundle outputs
+        shell: pwsh
+        run: |
+          $product = "${{ env.PRODUCT_NAME }}"
+          # Remove both canonical and legacy lower-case paths to avoid case-insensitive ghosts
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$product.4dbase/Plugins/$product.bundle"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$product.4dbase/plugins"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$product.4dbase/Plugins/Default"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "Objs"
+
       # GitHub-hosted windows-latest ships VS2022 (v143 toolset) but not the
-      # legacy v140 toolset the project is pinned to, so we override it on
+      # legacy v140 toolset the project may be pinned to, so we override it on
       # the command line rather than requiring an extra VS component install.
-      #
-      # The project also hardcodes WindowsTargetPlatformVersion=8.1 in
-      # TZ.vcxproj (<PropertyGroup Label="Globals">), and the Windows 8.1 SDK
-      # is no longer installed on current windows-latest images, which fails
-      # with MSB8036 ("The Windows SDK version 8.1 was not found"). Same class
-      # of fix as the toolset override above: override it on the command line
-      # rather than editing the vcxproj (which applies to all 4
-      # Debug/Release x Win32/x64 configurations, not just the one this job
-      # builds). "10.0" lets MSBuild resolve to whatever full 10.0.xxxxx.x SDK
-      # is actually installed on the runner, rather than pinning an exact
-      # build number that may not match the image.
+      # Same for WindowsTargetPlatformVersion=8.1 -> 10.0
       - name: build x64
         shell: cmd
-        run: msbuild "${{ env.VCX_SOLUTION }}" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 /m
+        run: |
+          msbuild "%PRODUCT_NAME%.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 /m
+
+      - name: normalize windows output to canonical case
+        shell: pwsh
+        run: |
+          $product = "${{ env.PRODUCT_NAME }}"
+          $canonicalDir = "$product.4dbase/Plugins/$product.bundle/Contents/Windows64"
+          New-Item -ItemType Directory -Force -Path $canonicalDir | Out-Null
+
+          # msbuild may have created plugins/contents/windows64 (lower-case) due to vcxproj settings.
+          # Find the built .4DX wherever it landed, case-insensitive.
+          $found = Get-ChildItem -Recurse -Filter "$product.4DX" -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like "*4dbase*" } | Select-Object -First 1
+          if (-not $found) {
+            Write-Host "Searching all..."
+            Get-ChildItem -Recurse -Filter "*.4DX" | ForEach-Object { Write-Host $_.FullName }
+            Write-Error "Windows binary $product.4DX not found after build"
+            exit 1
+          }
+          Write-Host "Found Windows binary at: $($found.FullName)"
+          Copy-Item $found.FullName "$canonicalDir/$product.4DX" -Force
+          Get-ChildItem "$canonicalDir"
 
       - name: upload windows binaries
         uses: actions/upload-artifact@v4
         with:
           name: windows-binaries
-          path: |
-            SFML.4dbase/Plugins/${{ env.PRODUCT_NAME }}.bundle/Contents/Windows64/${{ env.PRODUCT_NAME }}.4DX
+          # canonical case only - portable for macOS job
+          path: ${{ env.PRODUCT_NAME }}.4dbase/Plugins/${{ env.PRODUCT_NAME }}.bundle/Contents/Windows64/${{ env.PRODUCT_NAME }}.4DX
           if-no-files-found: error
 
   build-macos:
@@ -135,35 +160,88 @@ jobs:
 
       - name: build macOS plugin (universal)
         run: |
-          xcodebuild -project "${{ env.XCODE_PROJECT }}" \
-            -target "${{ env.PRODUCT_NAME }}" \
+          set -euo pipefail
+          PRODUCT="${{ env.PRODUCT_NAME }}"
+          XCODE_PROJECT="${PRODUCT}.xcodeproj"
+          XCODE_TARGET="${PRODUCT}"
+          FOURD_BASE="${PRODUCT}.4dbase"
+          PLUGINS_DIR="${FOURD_BASE}/Plugins"
+
+          echo "Cleaning stale outputs to avoid /Default/ vs / bug and case ghosts"
+          rm -rf "${PLUGINS_DIR}/${PRODUCT}.bundle"
+          rm -rf "${PLUGINS_DIR}/Default"
+          rm -rf "${FOURD_BASE}/plugins" # legacy lower-case
+          rm -rf "${FOURD_BASE}/Plugins/${PRODUCT}.build"
+
+          echo "Building $XCODE_PROJECT / $XCODE_TARGET"
+          xcodebuild -project "$XCODE_PROJECT" \
+            -target "$XCODE_TARGET" \
             -configuration Default \
             ARCHS="arm64 x86_64" \
             ONLY_ACTIVE_ARCH=NO \
             MACOSX_DEPLOYMENT_TARGET="${{ env.MACOS_DEPLOYMENT_TARGET }}" \
             CODE_SIGNING_ALLOWED=NO \
+            CONFIGURATION_BUILD_DIR="$PWD/$PLUGINS_DIR" \
             build
+
+          echo "Built contents:"
+          ls -R "$PLUGINS_DIR"
 
       - name: verify universal binary
         run: |
           set -euo pipefail
-          BIN="SFML.4dbase/Plugins/${{ env.PRODUCT_NAME }}.bundle/Contents/MacOS/${{ env.PRODUCT_NAME }}"
+          PRODUCT="${{ env.PRODUCT_NAME }}"
+          BIN="${PRODUCT}.4dbase/Plugins/${PRODUCT}.bundle/Contents/MacOS/${PRODUCT}"
+          
+          if [ ! -f "$BIN" ]; then
+            echo "::error::Expected binary not found at $BIN - CONFIGURATION_BUILD_DIR mismatch?"
+            ls -R "${PRODUCT}.4dbase"
+            exit 1
+          fi
+          
+          echo "Binary timestamp (must be recent):"
+          ls -lT "$BIN" || ls -l --time-style=full "$BIN"
+          
           lipo -info "$BIN"
-          lipo -info "$BIN" | grep -q "arm64" && lipo -info "$BIN" | grep -q "x86_64"
+          lipo -info "$BIN" | grep -q "arm64"
+          lipo -info "$BIN" | grep -q "x86_64"
+          echo "Verified universal binary"
 
       - name: merge Windows binaries into the bundle
         run: |
           set -euo pipefail
-          BUNDLE="SFML.4dbase/Plugins/${{ env.PRODUCT_NAME }}.bundle"
+          PRODUCT="${{ env.PRODUCT_NAME }}"
+          BUNDLE="${PRODUCT}.4dbase/Plugins/${PRODUCT}.bundle"
+          
           mkdir -p "$BUNDLE/Contents/Windows64"
-          cp "winbuild/${{ env.PRODUCT_NAME }}.4DX" "$BUNDLE/Contents/Windows64/${{ env.PRODUCT_NAME }}.4DX"
+          
+          # winbuild contains the single .4DX file downloaded from Windows job
+          echo "winbuild contents:"
+          ls -R winbuild
+          
+          # Handle case where artifact preserved subfolder structure (fallback)
+          SRC=$(find winbuild -name "${PRODUCT}.4DX" -type f | head -1)
+          if [ -z "$SRC" ]; then
+            echo "::error::Windows binary ${PRODUCT}.4DX not found in winbuild/"
+            exit 1
+          fi
+          
+          echo "Copying $SRC -> $BUNDLE/Contents/Windows64/${PRODUCT}.4DX"
+          cp "$SRC" "$BUNDLE/Contents/Windows64/${PRODUCT}.4DX"
+          
           echo "BUNDLE_PATH=$BUNDLE" >> "$GITHUB_ENV"
+          ls -R "$BUNDLE/Contents"
 
       - name: codesign
         run: |
           set -euo pipefail
           IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" \
             | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)".*/\1/')
+          if [ -z "$IDENTITY" ]; then
+            echo "::error::No Developer ID Application identity found"
+            security find-identity -v -p codesigning "$KEYCHAIN_PATH"
+            exit 1
+          fi
           echo "Signing with: $IDENTITY"
           codesign --verbose --deep --timestamp --force --options=runtime \
             --sign "$IDENTITY" "$BUNDLE_PATH"
@@ -172,22 +250,25 @@ jobs:
       - name: package, notarize & staple
         run: |
           set -euo pipefail
+          PRODUCT="${{ env.PRODUCT_NAME }}"
           VERSION="${{ needs.version.outputs.version }}"
-          ZIP_PATH="${{ env.PRODUCT_NAME }}-${VERSION}.zip"
-          DMG_PATH="${{ env.PRODUCT_NAME }}-${VERSION}.dmg"
+          ZIP_PATH="${PRODUCT}-${VERSION}.zip"
+          DMG_PATH="${PRODUCT}-${VERSION}.dmg"
 
-          # zip: cross-platform bundle (win + mac binaries together), what most users grab
+          echo "Creating $ZIP_PATH from $BUNDLE_PATH"
           ditto -c -k --keepParent "$BUNDLE_PATH" "$ZIP_PATH"
 
-          # dmg: mac-friendly, and the only format Apple lets us staple a ticket to
-          hdiutil create -format UDBZ -volname "${{ env.PRODUCT_NAME }}" -srcfolder "$BUNDLE_PATH" "$DMG_PATH"
+          echo "Creating $DMG_PATH from $BUNDLE_PATH"
+          hdiutil create -format UDBZ -volname "$PRODUCT" -srcfolder "$BUNDLE_PATH" "$DMG_PATH"
 
+          echo "Submitting for notarization..."
           xcrun notarytool submit "$ZIP_PATH" --keychain-profile "notarytool-profile" --keychain "$KEYCHAIN_PATH" --wait
           xcrun notarytool submit "$DMG_PATH" --keychain-profile "notarytool-profile" --keychain "$KEYCHAIN_PATH" --wait
           xcrun stapler staple "$DMG_PATH"
 
           echo "ZIP_PATH=$ZIP_PATH" >> "$GITHUB_ENV"
           echo "DMG_PATH=$DMG_PATH" >> "$GITHUB_ENV"
+          ls -lh "$ZIP_PATH" "$DMG_PATH"
 
       - name: create GitHub Release
         uses: softprops/action-gh-release@v2
