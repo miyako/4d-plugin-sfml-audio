@@ -3,14 +3,11 @@
 # .bundle, codesigns + notarizes the mac binary, and publishes a GitHub
 # Release with the zip and dmg attached.
 #
-# Trigger: push a tag matching v*.*.* (either by hand, or via bump-version.yml).
-# You can also run it manually against an existing tag with workflow_dispatch.
-#
-# PORTABILITY: Edit only PRODUCT_NAME below. Everything else is derived.
-# Canonical 4D layout is enforced:
-#   <Product>.4dbase/Plugins/<Product>.bundle/Contents/MacOS/<Product>
-#   <Product>.4dbase/Plugins/<Product>.bundle/Contents/Windows64/<Product>.4DX
-#   <Product>.4dbase/Plugins/<Product>.bundle/Contents/Resources/...
+# NOTE: /test/ path is intentional and static for this project.
+# PORTABILITY: Edit only PRODUCT_NAME below. Everything else derives from it.
+# Canonical layout enforced:
+#   test/Plugins/<Product>.bundle/Contents/MacOS/<Product>
+#   test/Plugins/<Product>.bundle/Contents/Windows64/<Product>.4DX
 
 name: Build & Release
 
@@ -29,8 +26,10 @@ permissions:
 
 env:
   # ---- only this needs editing per-project ----
-  PRODUCT_NAME: SFML
+  PRODUCT_NAME: Time and Number
   MACOS_DEPLOYMENT_TARGET: '10.13'
+  # static base for this project (intentional)
+  BASE_DIR: test
   # ---------------------------------------------
 
 concurrency:
@@ -63,20 +62,16 @@ jobs:
       - name: setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: clean stale bundle outputs
+      - name: clean stale outputs
         shell: pwsh
         run: |
           $product = "${{ env.PRODUCT_NAME }}"
-          # Remove both canonical and legacy lower-case paths to avoid case-insensitive ghosts
-          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$product.4dbase/Plugins/$product.bundle"
-          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$product.4dbase/plugins"
-          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$product.4dbase/Plugins/Default"
+          $base = "${{ env.BASE_DIR }}"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$base/Plugins/$product.bundle"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$base/plugins"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$base/Plugins/Default"
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "Objs"
 
-      # GitHub-hosted windows-latest ships VS2022 (v143 toolset) but not the
-      # legacy v140 toolset the project may be pinned to, so we override it on
-      # the command line rather than requiring an extra VS component install.
-      # Same for WindowsTargetPlatformVersion=8.1 -> 10.0
       - name: build x64
         shell: cmd
         run: |
@@ -86,28 +81,38 @@ jobs:
         shell: pwsh
         run: |
           $product = "${{ env.PRODUCT_NAME }}"
-          $canonicalDir = "$product.4dbase/Plugins/$product.bundle/Contents/Windows64"
+          $base = "${{ env.BASE_DIR }}"
+          $canonicalDir = "$base/Plugins/$product.bundle/Contents/Windows64"
           New-Item -ItemType Directory -Force -Path $canonicalDir | Out-Null
 
-          # msbuild may have created plugins/contents/windows64 (lower-case) due to vcxproj settings.
-          # Find the built .4DX wherever it landed, case-insensitive.
-          $found = Get-ChildItem -Recurse -Filter "$product.4DX" -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like "*4dbase*" } | Select-Object -First 1
+          $found = Get-ChildItem -Recurse -Filter "$product.4DX" -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like "*Plugins*" } | Select-Object -First 1
           if (-not $found) {
-            Write-Host "Searching all..."
             Get-ChildItem -Recurse -Filter "*.4DX" | ForEach-Object { Write-Host $_.FullName }
             Write-Error "Windows binary $product.4DX not found after build"
             exit 1
           }
-          Write-Host "Found Windows binary at: $($found.FullName)"
-          Copy-Item $found.FullName "$canonicalDir/$product.4DX" -Force
-          Get-ChildItem "$canonicalDir"
+          Write-Host "Found at: $($found.FullName)"
+
+          $destination = Join-Path $canonicalDir "$product.4DX"
+          $sourceResolved = (Resolve-Path $found.FullName).Path
+          $destResolved = (Resolve-Path $destination -ErrorAction SilentlyContinue).Path
+
+          if ($destResolved -and ($sourceResolved -ieq $destResolved)) {
+            # Windows is case-insensitive: MSBuild's OutDir (lowercase, per
+            # the .vcxproj) and this step's canonical path already point at
+            # the identical physical file. Copy-Item correctly refuses to
+            # "overwrite" a file with itself - there's nothing left to do.
+            Write-Host "Already at canonical location (case-insensitive match) - skipping copy."
+          } else {
+            Copy-Item $found.FullName $destination -Force
+          }
+          Get-ChildItem $canonicalDir
 
       - name: upload windows binaries
         uses: actions/upload-artifact@v4
         with:
           name: windows-binaries
-          # canonical case only - portable for macOS job
-          path: ${{ env.PRODUCT_NAME }}.4dbase/Plugins/${{ env.PRODUCT_NAME }}.bundle/Contents/Windows64/${{ env.PRODUCT_NAME }}.4DX
+          path: ${{ env.BASE_DIR }}/Plugins/${{ env.PRODUCT_NAME }}.bundle/Contents/Windows64/${{ env.PRODUCT_NAME }}.4DX
           if-no-files-found: error
 
   build-macos:
@@ -162,18 +167,18 @@ jobs:
         run: |
           set -euo pipefail
           PRODUCT="${{ env.PRODUCT_NAME }}"
+          BASE="${{ env.BASE_DIR }}"
           XCODE_PROJECT="${PRODUCT}.xcodeproj"
           XCODE_TARGET="${PRODUCT}"
-          FOURD_BASE="${PRODUCT}.4dbase"
-          PLUGINS_DIR="${FOURD_BASE}/Plugins"
+          PLUGINS_DIR="${BASE}/Plugins"
 
-          echo "Cleaning stale outputs to avoid /Default/ vs / bug and case ghosts"
+          echo "Cleaning stale outputs to avoid /Default/ vs / bug"
           rm -rf "${PLUGINS_DIR}/${PRODUCT}.bundle"
           rm -rf "${PLUGINS_DIR}/Default"
-          rm -rf "${FOURD_BASE}/plugins" # legacy lower-case
-          rm -rf "${FOURD_BASE}/Plugins/${PRODUCT}.build"
+          rm -rf "${BASE}/plugins"
+          rm -rf "${PLUGINS_DIR}/${PRODUCT}.build"
 
-          echo "Building $XCODE_PROJECT / $XCODE_TARGET"
+          echo "Building $XCODE_PROJECT target $XCODE_TARGET"
           xcodebuild -project "$XCODE_PROJECT" \
             -target "$XCODE_TARGET" \
             -configuration Default \
@@ -184,51 +189,50 @@ jobs:
             CONFIGURATION_BUILD_DIR="$PWD/$PLUGINS_DIR" \
             build
 
-          echo "Built contents:"
+          echo "Built:"
           ls -R "$PLUGINS_DIR"
 
       - name: verify universal binary
         run: |
           set -euo pipefail
           PRODUCT="${{ env.PRODUCT_NAME }}"
-          BIN="${PRODUCT}.4dbase/Plugins/${PRODUCT}.bundle/Contents/MacOS/${PRODUCT}"
-          
+          BASE="${{ env.BASE_DIR }}"
+          BIN="${BASE}/Plugins/${PRODUCT}.bundle/Contents/MacOS/${PRODUCT}"
+
           if [ ! -f "$BIN" ]; then
-            echo "::error::Expected binary not found at $BIN - CONFIGURATION_BUILD_DIR mismatch?"
-            ls -R "${PRODUCT}.4dbase"
+            echo "::error::Expected binary not found at $BIN"
+            ls -R "$BASE"
             exit 1
           fi
-          
-          echo "Binary timestamp (must be recent):"
+
+          echo "Timestamp check (must be recent):"
           ls -lT "$BIN" || ls -l --time-style=full "$BIN"
-          
+
           lipo -info "$BIN"
           lipo -info "$BIN" | grep -q "arm64"
           lipo -info "$BIN" | grep -q "x86_64"
-          echo "Verified universal binary"
 
       - name: merge Windows binaries into the bundle
         run: |
           set -euo pipefail
           PRODUCT="${{ env.PRODUCT_NAME }}"
-          BUNDLE="${PRODUCT}.4dbase/Plugins/${PRODUCT}.bundle"
-          
+          BASE="${{ env.BASE_DIR }}"
+          BUNDLE="${BASE}/Plugins/${PRODUCT}.bundle"
+
           mkdir -p "$BUNDLE/Contents/Windows64"
-          
-          # winbuild contains the single .4DX file downloaded from Windows job
+
           echo "winbuild contents:"
-          ls -R winbuild
-          
-          # Handle case where artifact preserved subfolder structure (fallback)
+          ls -R winbuild || true
+
           SRC=$(find winbuild -name "${PRODUCT}.4DX" -type f | head -1)
           if [ -z "$SRC" ]; then
             echo "::error::Windows binary ${PRODUCT}.4DX not found in winbuild/"
             exit 1
           fi
-          
+
           echo "Copying $SRC -> $BUNDLE/Contents/Windows64/${PRODUCT}.4DX"
           cp "$SRC" "$BUNDLE/Contents/Windows64/${PRODUCT}.4DX"
-          
+
           echo "BUNDLE_PATH=$BUNDLE" >> "$GITHUB_ENV"
           ls -R "$BUNDLE/Contents"
 
@@ -238,7 +242,7 @@ jobs:
           IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" \
             | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)".*/\1/')
           if [ -z "$IDENTITY" ]; then
-            echo "::error::No Developer ID Application identity found"
+            echo "::error::No Developer ID identity found"
             security find-identity -v -p codesigning "$KEYCHAIN_PATH"
             exit 1
           fi
@@ -255,13 +259,12 @@ jobs:
           ZIP_PATH="${PRODUCT}-${VERSION}.zip"
           DMG_PATH="${PRODUCT}-${VERSION}.dmg"
 
-          echo "Creating $ZIP_PATH from $BUNDLE_PATH"
+          echo "Creating $ZIP_PATH"
           ditto -c -k --keepParent "$BUNDLE_PATH" "$ZIP_PATH"
 
-          echo "Creating $DMG_PATH from $BUNDLE_PATH"
+          echo "Creating $DMG_PATH"
           hdiutil create -format UDBZ -volname "$PRODUCT" -srcfolder "$BUNDLE_PATH" "$DMG_PATH"
 
-          echo "Submitting for notarization..."
           xcrun notarytool submit "$ZIP_PATH" --keychain-profile "notarytool-profile" --keychain "$KEYCHAIN_PATH" --wait
           xcrun notarytool submit "$DMG_PATH" --keychain-profile "notarytool-profile" --keychain "$KEYCHAIN_PATH" --wait
           xcrun stapler staple "$DMG_PATH"
