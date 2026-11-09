@@ -71,13 +71,17 @@ jobs:
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$base/plugins"
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$base/Plugins/Default"
           Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "Objs"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "winbuild"
 
       - name: build x64
         shell: cmd
         run: |
-          msbuild "%PRODUCT_NAME%.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 /m
+          rem Dedicated OutDir so only fresh x64 MSBuild output can be picked up,
+          rem never a stale binary committed elsewhere in the repo.
+          msbuild "%PRODUCT_NAME%.sln" /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 "/p:OutDir=%GITHUB_WORKSPACE%\winbuild\x64\\" /m
+          if errorlevel 1 exit /b 1
 
-      - name: normalize windows output to canonical case
+      - name: copy x64 output to canonical layout
         shell: pwsh
         run: |
           $product = "${{ env.PRODUCT_NAME }}"
@@ -85,28 +89,23 @@ jobs:
           $canonicalDir = "$base/Plugins/$product.bundle/Contents/Windows64"
           New-Item -ItemType Directory -Force -Path $canonicalDir | Out-Null
 
-          $found = Get-ChildItem -Recurse -Filter "$product.4DX" -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like "*Plugins*" } | Select-Object -First 1
-          if (-not $found) {
+          $built = Join-Path $env:GITHUB_WORKSPACE "winbuild/x64/$product.4DX"
+          if (-not (Test-Path -LiteralPath $built -PathType Leaf)) {
             Get-ChildItem -Recurse -Filter "*.4DX" | ForEach-Object { Write-Host $_.FullName }
-            Write-Error "Windows binary $product.4DX not found after build"
+            Write-Error "MSBuild x64 output $built not found"
             exit 1
           }
-          Write-Host "Found at: $($found.FullName)"
-
-          $destination = Join-Path $canonicalDir "$product.4DX"
-          $sourceResolved = (Resolve-Path $found.FullName).Path
-          $destResolved = (Resolve-Path $destination -ErrorAction SilentlyContinue).Path
-
-          if ($destResolved -and ($sourceResolved -ieq $destResolved)) {
-            # Windows is case-insensitive: MSBuild's OutDir (lowercase, per
-            # the .vcxproj) and this step's canonical path already point at
-            # the identical physical file. Copy-Item correctly refuses to
-            # "overwrite" a file with itself - there's nothing left to do.
-            Write-Host "Already at canonical location (case-insensitive match) - skipping copy."
-          } else {
-            Copy-Item $found.FullName $destination -Force
-          }
+          Write-Host "Using MSBuild x64 output: $built"
+          Copy-Item -LiteralPath $built -Destination (Join-Path $canonicalDir "$product.4DX") -Force
           Get-ChildItem $canonicalDir
+
+      - name: verify x64 binary and imports
+        shell: pwsh
+        run: |
+          $product = "${{ env.PRODUCT_NAME }}"
+          $base = "${{ env.BASE_DIR }}"
+          & ./.github/scripts/verify-windows-deps.ps1 -Path "$base/Plugins/$product.bundle/Contents/Windows64/$product.4DX"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: upload windows binaries
         uses: actions/upload-artifact@v4
