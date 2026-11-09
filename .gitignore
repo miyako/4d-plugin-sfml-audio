@@ -5,3 +5,4 @@ SFML.4dbase/Plugins/SFML.bundle/Contents/Windows64/SFML.lib
 SFML.4dbase/Plugins/SFML.bundle/Contents/Windows64/SFML.exp
 Objs/*
 SFML.vcxproj
+winbuild/
